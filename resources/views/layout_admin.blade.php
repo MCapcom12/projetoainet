@@ -27,7 +27,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{action('PageController@index')}}">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{action('DashboardController@index')}}">
         <div class="sidebar-brand-icon">
             <img src="/img/logo.png" alt="Logo" class="logo-img">
         </div>
@@ -90,7 +90,7 @@
 
         <!-- Nav Item -->
        <li class="nav-item">
-            <a class="nav-link" href="{{action('PageController@index')}}">
+            <a class="nav-link" href="{{action('DashboardController@index')}}">
               <i class="fas fa-fw fa-home"></i>
               <span>Parte Publica</span></a>
           </li>
@@ -121,11 +121,11 @@
           </button>
 
           <ul class="navbar-nav ml-auto">
-            @guest
+             @guest
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
-            @else
+            @else 
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -147,6 +147,7 @@
                 </li>
             @endguest
           </ul>
+          
 
         </nav>
         <!-- End of Topbar -->
@@ -180,6 +181,7 @@
 
       </div>
       <!-- End of Main Content -->
+        
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -202,8 +204,8 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <!-- Logout Modal-->
+   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
