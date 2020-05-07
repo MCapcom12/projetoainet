@@ -33,3 +33,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //conta
 Route::get('admin/contas','ContaController@admin')->name('admin.contas');
+Route::get('contas','ContaController@index')->name('disciplinas.index');
