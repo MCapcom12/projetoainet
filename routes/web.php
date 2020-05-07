@@ -20,8 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 // dashboard
 Route::get('admin', 'DashboardController@index')->name('admin.dashboard');
-Auth::routes();
-
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Auth::routes();
