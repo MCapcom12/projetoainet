@@ -10,6 +10,5 @@ class ContaController extends Controller
     public function admin(){
         $contas = Conta::all();
         return view('contas.admin')->withContas($contas);
-        
     }
 }
