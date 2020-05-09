@@ -10,9 +10,9 @@
         <form method="GET" action="{{route('admin.contas')}}" class="form-group">
             <div class="input-group">
                 <Select class="custom-select" name="user" id="inputUser" aria-label="User">
-                    <option value= "" {{''== old('user', $selectedUser) ? 'selected' : '' }}>Todos Users</option>
-                    @foreach($users as $abr => $nome)
-                    <option value={{$abr}} {{$abr== old('user', $selectedUser) ? 'selected' : ''}}>{{$nome}}</option>
+                    <option value= "" {{''== old('user_id', $selectedUser) ? 'selected' : '' }}>Todos Users</option>
+                    @foreach($users as $abr => $name)
+                    <option value={{$abr}} {{$abr== old('user_id', $selectedUser) ? 'selected' : ''}}>{{$name}}</option>
                     @endforeach
                 </Select>
                 <div class="input-group-append">
@@ -24,7 +24,8 @@
 </div> 
 <table class = "table">
     <thead>
-        <tr>          
+        <tr>
+            <th>id</th>          
             <th>nome</th>            
             <th>saldo atual</th> 
             <th></th>
@@ -33,7 +34,8 @@
     </thead>
     <tbody>
     @foreach($contas as $cont)
-        <tr>            
+        <tr>   
+            <td>{{$cont->id}}</td>         
             <td> {{$cont->nome}}</td>
             <td> {{$cont->saldo_atual}}</td>
             <td><a href="{{route('admin.contas.edit', ['id' =>$cont->id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
@@ -44,4 +46,6 @@
     @endforeach
     </tbody>
 </table>
+
+{{$contas->withQueryString()->links()}}
 @endsection
