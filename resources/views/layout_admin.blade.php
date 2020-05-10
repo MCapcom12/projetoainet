@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Dashboard</title>
+  <title>Finanças Pessoais</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -41,7 +41,7 @@
       <li class="nav-item {{Route::currentRouteName()=='admin.dashboard'? 'active': ''}}">
         <a class="nav-link" href="{{route('admin.dashboard')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Página Inicial</span></a>
       </li>
 
       <!-- Divider -->
@@ -166,22 +166,37 @@
                 @include('partials.errors-message')
             @endif
 
+
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">@yield('title')</h1>
+          <div class="row">
+            <h1 class="col" style="display: flex; align-items: center; justify-content: center">@yield('title')</h1>
           </div>
 
           <!-- Content Row -->
           <div class="row">
-              <div class="col">
+              <div class="col" >
                 @yield('content')
               </div>
 
           </div>
 
+          <!-- Estatisticas Gerais -->
+          <div class="row">
+            <h1 class="col" style="display: flex; align-items: center; justify-content: center">@yield('title2')</h1>
+          </div>
+
+          <!-- Numero de users -->
+          <div class="row">
+              <div class="col" >
+                @yield('content2')
+              </div>
+
+          </div>
 
         </div>
         <!-- /.container-fluid -->
+
+        
 
       </div>
       <!-- End of Main Content -->
