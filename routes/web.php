@@ -33,3 +33,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //conta
 Route::get('admin/contas','ContaController@admin')->name('admin.contas');
+Route::get('contas','ContaController@index')->name('contas.index');
+
+Route::get('admin/contas/{id}/edit','ContaController@edit')->name('admin.contas.edit');
+Route::get('admin/contas/create','ContaController@create')->name('admin.contas.create');
+
+Route::post('admin/contas/create','ContaController@store')->name('admin.contas.store');
+
