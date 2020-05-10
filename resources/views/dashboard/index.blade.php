@@ -12,19 +12,67 @@ despesas. Para além disso, apenas nós garantimos que os seus familiares o poss
 @section('title2','ESTATÍSTICAS GERAIS')
 @section('content2')
 
-<table>
+<br>
+<br>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+
+}
+th{
+  padding: 15px;
+  text-align: left;
+  background-color:#4169E1;
+  color:white;
+  text-align:center;
+}
+
+td{
+  padding: 15px;
+  text-align:center;
+}
+
+</style>
+
+
+<table style="width: 100%">
         <thead>
             <tr>
                 <th>Número de Contas</th>
                 <th>Número de Utilizadores</th>
-                
+                <th>Total de movimentos</th>
             </tr>
         </thead>
         <tbody>
         <tr>
                 <td> {{count($contas)}}</td>
-                
+                <td> {{count($users)}}</td>
+                <td> {{count($users)}}</td>
             </tr>
         </tbody>
-    </table>
+    </table> 
+
+
+
+
+
+
+
+
+    <!-- <div class="row">
+  <div class="column" style="">
+    <h2>Número de Contas</h2>
+    <p>{{count($contas)}}</p>
+  </div>
+  <div class="column" style="">
+    <h2>Número de Utilizadores</h2>
+    <p>{{count($users)}}</p>
+  </div>
+  <div class="column" style="">
+    <h2>Column 3</h2>
+    <p>Some text..</p>
+  </div>
+</div> -->
 @endsection

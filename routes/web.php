@@ -40,3 +40,6 @@ Route::get('admin/contas/create','ContaController@create')->name('admin.contas.c
 
 Route::post('admin/contas/create','ContaController@store')->name('admin.contas.store');
 
+//users
+Route::get('admin/users','UserController@admin')->name('admin.contas');
+
