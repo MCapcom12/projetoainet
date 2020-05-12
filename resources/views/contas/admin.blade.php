@@ -11,9 +11,7 @@
             <div class="input-group">
                 <Select class="custom-select" name="user" id="inputUser" aria-label="User">
                     <option value= "" {{''== old('user_id', $selectedUser) ? 'selected' : '' }}>Todos Users</option>
-                    @foreach($users as $abr => $name)
-                    <option value={{$abr}} {{$abr== old('user_id', $selectedUser) ? 'selected' : ''}}>{{$name}}</option>
-                    @endforeach
+                    
                 </Select>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
