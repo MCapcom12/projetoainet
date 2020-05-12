@@ -1,7 +1,5 @@
 @extends('layout_admin')
-
+@section('title','UTILIZADORES')
 @section('content')
-<div>BRUTAL</div>
-        
 
 @endsection
