@@ -37,62 +37,30 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item {{Route::currentRouteName()=='admin.dashboard'? 'active': ''}}">
-        <a class="nav-link" href="{{route('admin.dashboard')}}">
+      <li class="nav-item {{Route::currentRouteName()=='dashboard'? 'active': ''}}">
+        <a class="nav-link" href="{{route('dashboard')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Página Inicial</span></a>
       </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
 
 
-      @can('viewAny', App\Curso::class)
-      <!-- Nav Item -->
-        <li class="nav-item {{Route::currentRouteName()=='admin.cursos'? 'active': ''}}">
-            <a class="nav-link" href="{{route('admin.cursos')}}">
-          <i class="fas fa-fw fa-table"></i>
-              <span>Cursos</span></a>
-          </li>
-      @endcan
+      
+      
+      
 
-      @can('viewAny', App\Disciplina::class)
-        <!-- Nav Item -->
-        <li class="nav-item {{Route::currentRouteName()=='admin.disciplinas'? 'active': ''}}">
-            <a class="nav-link" href="{{route('admin.disciplinas')}}">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Disciplinas</span></a>
-          </li>
-      @endcan
-
-      @can('viewAny', App\Docente::class)
-            <!-- Nav Item -->
-       <li class="nav-item {{Route::currentRouteName()=='admin.docentes'? 'active': ''}}">
-            <a class="nav-link" href="{{route('admin.docentes')}}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Docentes</span></a>
-      </li>
-      @endcan
-
-      @can('viewAny', App\Aluno::class)
-        <!-- Nav Item -->
-       <li class="nav-item {{Route::currentRouteName()=='admin.alunos'? 'active': ''}}">
-            <a class="nav-link" href="{{route('admin.alunos')}}">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Alunos</span></a>
-          </li>
-      @endcan
+      
 
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Nav Item -->
-       <li class="nav-item">
-            <a class="nav-link" href="{{action('DashboardController@index')}}">
-              <i class="fas fa-fw fa-home"></i>
-              <span>Parte Publica</span></a>
-          </li>
+        
+          <!-- Nav Item -->
+        <li class="nav-item {{Route::currentRouteName()=='admin.contas'? 'active': ''}}">
+            <a class="nav-link" href="{{route('admin.contas')}}">
+          <i class="fas fa-fw fa-table"></i>
+              <span>Contas</span></a>
+          </li> 
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

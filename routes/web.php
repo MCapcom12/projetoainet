@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // dashboard
-Route::get('admin', 'DashboardController@index')->name('admin.dashboard');
+Route::get('/', 'DashboardController@index')->name('dashboard');
 Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -41,5 +41,5 @@ Route::get('admin/contas/create','ContaController@create')->name('admin.contas.c
 Route::post('admin/contas/create','ContaController@store')->name('admin.contas.store');
 
 //users
-Route::get('admin/users','UserController@admin')->name('admin.contas');
+Route::get('admin/users','UserController@admin')->name('admin.users');
 
