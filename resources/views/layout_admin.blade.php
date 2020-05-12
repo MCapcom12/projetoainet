@@ -43,15 +43,6 @@
           <span>Página Inicial</span></a>
       </li>
 
-
-
-      
-      
-      
-
-      
-
-
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
         
@@ -61,6 +52,18 @@
           <i class="fas fa-fw fa-table"></i>
               <span>Contas</span></a>
           </li> 
+
+          <li class="nav-item {{Route::currentRouteName()=='users'? 'active': ''}}">
+            <a class="nav-link" href="{{route('users')}}">
+          <i class="fas fa-fw fa-table"></i>
+              <span>Utilizadores</span></a>
+          </li>
+
+          <li class="nav-item {{Route::currentRouteName()=='movimentos'? 'active': ''}}">
+            <a class="nav-link" href="{{route('movimentos')}}">
+          <i class="fas fa-fw fa-table"></i>
+              <span>Movimentos</span></a>
+          </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

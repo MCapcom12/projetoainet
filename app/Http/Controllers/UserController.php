@@ -7,9 +7,9 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function admin(){
+    public function index(){
         $users = User::all();
-        return view('users.admin')->withUsers($users);
+        return view('users.index')->withUsers($users);
 
         
     }
