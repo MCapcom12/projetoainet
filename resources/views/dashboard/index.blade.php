@@ -49,7 +49,7 @@ td{
         <tr>
                 <td> {{count($contas)}}</td>
                 <td> {{count($users)}}</td>
-                <td> {{count($users)}}</td>
+                <td> {{$movimentos}}</td>
             </tr>
         </tbody>
     </table> 
