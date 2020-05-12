@@ -10,7 +10,7 @@ class MovimentoController extends Controller
 {
     public function index()
     {
-        return view('movimentos.index');                                     
+        return view('Movimentos.index');                                     
     }
 
 }
