@@ -46,12 +46,18 @@
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
         
-          <!-- Nav Item -->
-        <li class="nav-item {{Route::currentRouteName()=='contas'? 'active': ''}}">
+          <!-- Nav Item --> <!-- rota para perfil-->
+          <li class="nav-item {{Route::currentRouteName()=='contas'? 'active': ''}}">
+            <a class="nav-link" href="{{route('Perfil')}}">
+          <i class="fas fa-fw fa-table"></i>
+              <span>Perfil</span></a>
+          </li>
+
+          <li class="nav-item {{Route::currentRouteName()=='contas'? 'active': ''}}">
             <a class="nav-link" href="{{route('contas')}}">
           <i class="fas fa-fw fa-table"></i>
               <span>Contas</span></a>
-          </li> 
+          </li>
 
           <li class="nav-item {{Route::currentRouteName()=='users'? 'active': ''}}">
             <a class="nav-link" href="{{route('users')}}">
@@ -108,11 +114,18 @@
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href=#>
+                    <a class="dropdown-item" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Contas(podemos usar esta parte para um novo acesso ao perfil e contas)
                     </a>
                     <div class="dropdown-divider"></div>
+
+                    <a class="dropdown-item" href="{{ route('Perfil') }}">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Perfil
+                    </a>
+                    <div class="dropdown-divider"></div>
+
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout

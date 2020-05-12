@@ -47,4 +47,5 @@ Route::get('users','UserController@index')->name('users');
 //Movimentos
 Route::get('Movimentos', 'MovimentoController@index')->name('Movimentos');
 
-
+//Perfil
+Route::get('Perfil', 'PerfilController@index')->name('Perfil');
