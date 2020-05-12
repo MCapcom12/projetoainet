@@ -56,8 +56,8 @@
       <hr class="sidebar-divider d-none d-md-block">
         
           <!-- Nav Item -->
-        <li class="nav-item {{Route::currentRouteName()=='admin.contas'? 'active': ''}}">
-            <a class="nav-link" href="{{route('admin.contas')}}">
+        <li class="nav-item {{Route::currentRouteName()=='contas'? 'active': ''}}">
+            <a class="nav-link" href="{{route('contas')}}">
           <i class="fas fa-fw fa-table"></i>
               <span>Contas</span></a>
           </li> 

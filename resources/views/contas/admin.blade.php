@@ -4,10 +4,10 @@
 @section('content')
 <div class= "row mb-3">
     <div class="col-3">
-        <a href="{{route('admin.contas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Conta</a>
+        <a href="{{route('contas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Conta</a>
     </div>
     <div class="col-9">
-        <form method="GET" action="{{route('admin.contas')}}" class="form-group">
+        <form method="GET" action="{{route('contas')}}" class="form-group">
             <div class="input-group">
                 <Select class="custom-select" name="user" id="inputUser" aria-label="User">
                     <option value= "" {{''== old('user_id', $selectedUser) ? 'selected' : '' }}>Todos Users</option>
@@ -38,7 +38,7 @@
             <td>{{$cont->id}}</td>         
             <td> {{$cont->nome}}</td>
             <td> {{$cont->saldo_atual}}</td>
-            <td><a href="{{route('admin.contas.edit', ['id' =>$cont->id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
+            <td><a href="{{route('contas.edit', ['id' =>$cont->id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
             <td>
                 <a href="#" class= "btn btn-danger btn-sm">Apagar(Ainda por fazer)</a> 
             </td>
