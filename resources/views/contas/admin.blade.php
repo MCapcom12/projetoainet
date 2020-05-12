@@ -12,11 +12,11 @@
 <table class = "table">
     <thead>
         <tr>
-            <th>id</th>          
-            <th>nome</th>            
+            <th>id</th>
+            <th>nome</th>
             <th>saldo atual</th> 
             <th></th>
-            <th></th>           
+            <th></th>  
         </tr>
     </thead>
     <tbody>

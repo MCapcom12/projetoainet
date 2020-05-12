@@ -12,5 +12,5 @@ class MovimentoController extends Controller
         $movs = Movimento::count();
          return view('Movimentos.index');                                  
     }
-
+    
 }
