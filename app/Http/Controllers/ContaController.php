@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Conta;
 use App\User;
 
+use Illuminate\Support\Facades\Auth;
+
 class ContaController extends Controller
 {
     public function admin(Request $request){
-       $user= $request->user ?? '';
+       $user= Auth::user ;
        
        $qry= Conta::query();
 
@@ -21,7 +23,7 @@ class ContaController extends Controller
 
        return view('contas.admin')
         ->withContas($contas)
-        ->withUsers($users)
+        
         ->withSelectedUser($user);
 
         
