@@ -32,7 +32,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/home', 'HomeController@index')->name('home');
 
 //conta
-Route::get('contas','ContaController@admin')->name('contas');
+Route::get('contas','ContaController@admin')->name('contas')->middleware('auth');
 
 
 Route::get('contas/{id}/edit','ContaController@edit')->name('contas.edit');

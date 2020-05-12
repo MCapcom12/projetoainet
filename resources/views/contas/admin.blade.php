@@ -2,23 +2,12 @@
 @section('title','Contas')
 
 @section('content')
+
 <div class= "row mb-3">
     <div class="col-3">
         <a href="{{route('contas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Conta</a>
     </div>
-    <div class="col-9">
-        <form method="GET" action="{{route('contas')}}" class="form-group">
-            <div class="input-group">
-                <Select class="custom-select" name="user" id="inputUser" aria-label="User">
-                    <option value= "" {{''== old('user_id', $selectedUser) ? 'selected' : '' }}>Todos Users</option>
-                    
-                </Select>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
-                </div>
-            </div>
-        </form>
-    </div>    
+    
 </div> 
 <table class = "table">
     <thead>

@@ -11,12 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class ContaController extends Controller
 {
     public function admin(Request $request){
+
+      // $user= Auth::id();
        $user= $request->user() ;
-       
+      
        $qry= Conta::query();
 
        if($user){
-           $qry->where('user',$user);
+           $qry->where('user_id',$user->id);
        }
        $contas=$qry->paginate(10);
       
@@ -24,7 +26,7 @@ class ContaController extends Controller
        return view('contas.admin')
         ->withContas($contas);
         
-        //->withSelectedUser($user);
+       
 
         
     }
