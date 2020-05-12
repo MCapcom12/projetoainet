@@ -32,13 +32,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/home', 'HomeController@index')->name('home');
 
 //conta
-Route::get('admin/contas','ContaController@admin')->name('admin.contas');
-Route::get('contas','ContaController@index')->name('contas.index');
+Route::get('contas','ContaController@admin')->name('contas');
 
-Route::get('admin/contas/{id}/edit','ContaController@edit')->name('admin.contas.edit');
-Route::get('admin/contas/create','ContaController@create')->name('admin.contas.create');
 
-Route::post('admin/contas/create','ContaController@store')->name('admin.contas.store');
+Route::get('contas/{id}/edit','ContaController@edit')->name('contas.edit');
+Route::get('contas/create','ContaController@create')->name('contas.create');
+
+Route::post('admin/contas/create','ContaController@store')->name('contas.store');
 
 //users
 Route::get('users','UserController@index')->name('users');
