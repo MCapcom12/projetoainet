@@ -59,8 +59,8 @@
               <span>Utilizadores</span></a>
           </li>
 
-          <li class="nav-item {{Route::currentRouteName()=='movimentos'? 'active': ''}}">
-            <a class="nav-link" href="{{route('movimentos')}}">
+          <li class="nav-item {{Route::currentRouteName()=='Movimentos'? 'active': ''}}">
+            <a class="nav-link" href="{{route('Movimentos')}}">
           <i class="fas fa-fw fa-table"></i>
               <span>Movimentos</span></a>
           </li>

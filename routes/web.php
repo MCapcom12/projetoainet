@@ -44,5 +44,5 @@ Route::post('admin/contas/create','ContaController@store')->name('contas.store')
 Route::get('users','UserController@index')->name('users');
 
 //Movimentos
-Route::get('/movimentos', 'MovimentoController@index')->name('movimentos');
+Route::get('Movimentos', 'MovimentoController@index')->name('Movimentos');
 
