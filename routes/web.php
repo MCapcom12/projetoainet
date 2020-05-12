@@ -38,11 +38,8 @@ Route::get('contas','ContaController@admin')->name('contas');
 Route::get('contas/{id}/edit','ContaController@edit')->name('contas.edit');
 Route::get('contas/create','ContaController@create')->name('contas.create');
 
-Route::post('admin/contas/create','ContaController@store')->name('contas.store');
+Route::post('contas/create','ContaController@store')->name('contas.store');
 
 //users
-Route::get('users','UserController@index')->name('users');
-
-//Movimentos
-Route::get('/movimentos', 'MovimentoController@index')->name('movimentos');
+Route::get('admin/users','UserController@admin')->name('admin.users');
 
