@@ -42,7 +42,9 @@ class ContaController extends Controller
 
     public function store(Request $request){
         $validated_data = $request->validade([
-            'nome'=>'required|string|max:20'
+            'nome'=>'required|string|max:20',
+            'descricao'=>'opcional|string',
+            'saldo_abertura'=>'required|double'
 
         ]);
 
