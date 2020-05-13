@@ -13,8 +13,4 @@
 	</div>
 </div>
 
-<!--
-<h2>Nome: {{$id -> name}}</h2>
-<h2>Email: {{$id -> email}}</h2>-->
-
 @endsection

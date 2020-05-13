@@ -49,3 +49,5 @@ Route::get('Movimentos', 'MovimentoController@index')->name('Movimentos');
 
 //Perfil
 Route::get('Perfil', 'PerfilController@index')->name('Perfil');
+Route::get('Perfil/edit', 'ProfilesController@index')->name('Edit')->middleware('auth');
+Route::post('Perfil/edit/update', 'ProfilesController@update')->name('Update');
