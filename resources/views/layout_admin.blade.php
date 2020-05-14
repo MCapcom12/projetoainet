@@ -119,7 +119,7 @@
                     Contas(podemos usar esta parte para um novo acesso ao perfil e contas)
                     </a>
                     <div class="dropdown-divider"></div>
-
+                    
                     <a class="dropdown-item" href="{{ route('Perfil') }}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Perfil
@@ -128,7 +128,13 @@
 
                     <a class="dropdown-item" href="{{ route('Edit') }}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
+                    Definições de Conta
+                    </a>
+                    <div class="dropdown-divider"></div>
+
+                    <a class="dropdown-item" href="{{ route('ChangePassword') }}">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Definições de Segurança
                     </a>
                     <div class="dropdown-divider"></div>
 

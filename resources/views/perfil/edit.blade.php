@@ -46,7 +46,7 @@
                             <div class="col-md-6">
                                 <input id="nif" type="text" class="form-control @error('nif') is-invalid @enderror" name="nif" value="{{ $id->NIF }}" autocomplete="nif" autofocus>
 
-                                @error('NIF')
+                                @error('nif')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -65,42 +65,6 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="old_password" class="col-md-4 col-form-label text-md-right">{{ __('Old Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="old_password" type="password" class="form-control @error('password') is-invalid @enderror" name="old_password">
-
-                                @error('old_password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="new_password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="new_password" type="password" class="form-control @error('password') is-invalid @enderror" name="new_password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm New Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="new_confirm_password" type="password" class="form-control" name="new_confirm_password">
                             </div>
                         </div>
 

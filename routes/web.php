@@ -48,5 +48,7 @@ Route::get('Movimentos', 'MovimentoController@index')->name('Movimentos')->middl
 
 //Perfil
 Route::get('Perfil', 'PerfilController@index')->name('Perfil');
-Route::get('Perfil/edit', 'ProfilesController@index')->name('Edit')->middleware('auth');
-Route::post('Perfil/edit/update', 'ProfilesController@update')->name('Update');
+Route::get('Perfil/Edit', 'ProfilesController@index')->name('Edit')->middleware('auth');
+Route::post('Perfil/Edit', 'ProfilesController@update')->name('Update');
+Route::get('Perfil/ChangePassword/', 'ChangePasswordController@index');
+Route::post('Perfil/ChangePassword/', 'ChangePasswordController@store')->name('ChangePassword');
