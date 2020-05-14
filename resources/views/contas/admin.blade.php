@@ -16,7 +16,8 @@
             <th>nome</th>
             <th>saldo atual</th> 
             <th></th>
-            <th></th>  
+            <th></th> 
+            <th></th> 
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,9 @@
             <td><a href="{{route('contas.edit', ['id' =>$cont->id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
             <td>
                 <a href="#" class= "btn btn-danger btn-sm">Apagar(Ainda por fazer)</a> 
+            </td>
+            <td>
+                <a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Ver Movimentos</a>
             </td>
         </tr>
     @endforeach
