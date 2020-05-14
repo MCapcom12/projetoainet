@@ -84,10 +84,11 @@ class ProfilesController extends Controller
         $user = Auth::user();
 
         if(request()->hasFile('foto')){
-            $foto = request()->file('foto')->getClientOriginalName();
-            //Storage::delete('public/fotos', $user->id . '/' .  $foto, '');
-            request()->file('foto')->storeAs('fotos', $user->id . '/' .  $foto, '');
+            $fotoDelete = $user->foto;
+            $foto = $user->id . '_' . request()->file('foto')->getClientOriginalName();
+            request()->file('foto')->storeAs('fotos', $foto, '');
             $user->update(['foto' => $foto]);
+            //Storage::delete('public/fotos', $fotoDelete);
         }
 
         $user->name = $request->name;
