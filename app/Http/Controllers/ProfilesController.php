@@ -76,8 +76,8 @@ class ProfilesController extends Controller
         $this->validate($request, [
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
-            'nif' => ['int', 'digits_between:0,9'],
-            'telefone' => 'int',
+            'nif' => ['nullable','int', 'digits_between:0,9'],
+            'telefone' => ['nullable','int'],
             'foto' => ['max:10000', 'mimes:jpeg,png,jpg'],
         ]);
 
@@ -88,7 +88,7 @@ class ProfilesController extends Controller
             $foto = $user->id . '_' . request()->file('foto')->getClientOriginalName();
             request()->file('foto')->storeAs('fotos', $foto, '');
             $user->update(['foto' => $foto]);
-            //Storage::delete('public/fotos', $fotoDelete);
+            Storage::delete('fotos' . '/' . $fotoDelete);
         }
 
         $user->name = $request->name;
