@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Conta;
 use App\User;
 
+
 use Illuminate\Support\Facades\Auth;
 
 class ContaController extends Controller
@@ -25,10 +26,6 @@ class ContaController extends Controller
 
        return view('contas.admin')
         ->withContas($contas);
-        
-       
-
-        
     }
 
     public function edit(){
@@ -36,21 +33,20 @@ class ContaController extends Controller
     }
 
     public function create(){
-        $listaUsers= User::pluck('name','id');
-        return view('contas.create')->withUsers($listaUsers);
+        $user= Auth::id();
+       // dd($user);
+        return view('contas.create')->withUser($user);
     }
 
     public function store(Request $request){
-        $validated_data = $request->validade([
+        $validated_data = $request->validate([
             'nome'=>'required|string|max:20',
-            'descricao'=>'opcional|string',
-            'saldo_abertura'=>'required|double'
-
+            'descricao'=>'nullable|string',
+            'saldo_abertura'=>'required|numeric'
         ]);
+       Conta::create($validated_data);
 
-        Conta::create($validated_data);
-
-        return redirect()->route('admin.disciplinas')
+        return redirect()->route('contas')
             ->with('alert-msg','Conta criada com sucesso')
             ->with('alert-type','success');
     }
