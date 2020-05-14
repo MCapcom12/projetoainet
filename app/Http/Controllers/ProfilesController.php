@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage; 
-use Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use App\Rules\MatchOldPassword;
+use App\User;
 
 class ProfilesController extends Controller
 {
@@ -74,10 +76,13 @@ class ProfilesController extends Controller
     {
         $this->validate($request, [
             'name' => ['string', 'max:255'],
-            'email' => ['email', 'max:255', 'unique:users'],
-            //'old_password' => ['string', 'min:8'/*'confirmed'*/],
+            //'email' => ['email', 'max:255', 'unique:users'],
+            //'old_password' => ['required', 'min:8', new MatchOldPassword],
             //'new_password' => ['string', 'min:8'/*'confirmed'*/],
             //'new_confirm_password' => ['required','string', 'min:8', 'same:new_password'],
+            'old_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required', 'min:8'],
+            'new_confirm_password' => ['same:new_password'],
             'foto' => ['max:10000'],
         ]);
 
@@ -90,13 +95,13 @@ class ProfilesController extends Controller
             $user->update(['foto' => $foto]);
         }
 
-        if($request->has('name')){
-            $user->name = $request->name;
-        }
+        $user->name = $request->name;
+        $user->nif = $request->nif;
+        $user->telefone = $request->telefone;
+
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
 
         $user->save();
-
-        Session::flash('sucess', 'Account profile updated');
 
         return redirect()->back();
     }

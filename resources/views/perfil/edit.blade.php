@@ -44,7 +44,7 @@
                             <label for="nif" class="col-md-4 col-form-label text-md-right">{{ __('NIF') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nif" type="text" class="form-control @error('nif') is-invalid @enderror" name="nif" value="{{ $id->nif }}" autocomplete="nif" autofocus>
+                                <input id="nif" type="text" class="form-control @error('nif') is-invalid @enderror" name="nif" value="{{ $id->NIF }}" autocomplete="nif" autofocus>
 
                                 @error('NIF')
                                     <span class="invalid-feedback" role="alert">
@@ -69,12 +69,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Old Password') }}</label>
+                            <label for="old_password" class="col-md-4 col-form-label text-md-right">{{ __('Old Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="old_password" type="password" class="form-control @error('password') is-invalid @enderror" name="old_password">
 
-                                @error('password')
+                                @error('old_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -83,7 +83,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
+                            <label for="new_password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="new_password" type="password" class="form-control @error('password') is-invalid @enderror" name="new_password">
