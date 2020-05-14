@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Conta;
 use App\User;
+use App\Http\Requests\ContaPost;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -38,12 +39,10 @@ class ContaController extends Controller
         return view('contas.create')->withUser($user);
     }
 
-    public function store(Request $request){
-        $validated_data = $request->validate([
-            'nome'=>'required|string|max:20',
-            'descricao'=>'nullable|string',
-            'saldo_abertura'=>'required|numeric'
-        ]);
+    public function store(ContaPost $request){
+        
+        $validated_data = $request->validated();
+        
        Conta::create($validated_data);
 
         return redirect()->route('contas')
