@@ -2,13 +2,13 @@
 @section('title','UTILIZADORES')
 @section('content')
 
-</div> 
+<div> 
 <table class = "table">
     <thead>
         <tr>
-            <th>id</th>
-            <th>nome</th>
-            <th>email</th> 
+            <th>Foto</th>
+            <th>Nome</th>
+            <th>Email</th> 
             <th></th>
             <th></th> 
             <th></th> 
@@ -17,7 +17,7 @@
     <tbody>
     @foreach($users as $id)
         <tr>   
-            <td>{{$id->id}}</td>         
+            <td><img src="{{$id->foto ? $path = '/storage/fotos/' . $id->foto : asset('img/default_img.png') }}" style="width:50px;height:50px;float:left; border-radius: 50%; margin-right: 25px;"></td>         
             <td>{{$id->name}}</td>
             <td>{{$id->email}}</td>
         </tr>
@@ -25,5 +25,7 @@
     </tbody>
 </table>
 </div>
+
+{{ $users->links() }}
 
 @endsection

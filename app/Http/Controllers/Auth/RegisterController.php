@@ -8,6 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
@@ -74,9 +76,10 @@ class RegisterController extends Controller
         ]);
 
         if(request()->hasFile('foto')){
-            $foto = request()->file('foto')->getClientOriginalName();
-            request()->file('foto')->storeAs('fotos', $user->id . '/' .  $foto, '');
+            $foto = $user->id . '_' .  request()->file('foto')->getClientOriginalName();
+            request()->file('foto')->storeAs('fotos', $foto, '');
             $user->update(['foto' => $foto]);
+
         }
 
         return $user;

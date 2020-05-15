@@ -3,31 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Conta extends Model
 {
-    //
-    protected $fillable = [
-        'id','user_id', 'nome', 'descricao', 'saldo_abertura', 'saldo_atual', 'saldo_ultimo_movimento', 'deleted_at'
-    ];
+    
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        
-    ];
+    public $timestamps = false;
+   
+    protected $fillable=['id','user_id','nome','descricao','saldo_abertura','saldo_atual','data_ultimo_movimento','deleted_at'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        
-    ];
-
+    public function __construct(array $attributes = [])
+    {
+        $this->user_id = Auth::id();
+        $this->saldo_atual = $this->saldo_abertura;
+     
+        parent::__construct($attributes);
+    }
     
 }
