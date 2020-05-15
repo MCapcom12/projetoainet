@@ -29,6 +29,13 @@ class ContaController extends Controller
         ->withContas($contas);
     }
 
+    public function detalhe(Conta $conta){
+        
+        
+        return view('contas.detalhe')
+        ->withConta($conta);
+    }
+
     public function edit(){
         return view('contas.edit');
     }
