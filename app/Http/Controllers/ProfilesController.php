@@ -82,7 +82,6 @@ class ProfilesController extends Controller
         ]);
 
         $user = Auth::user();
-
         if(request()->hasFile('foto')){
             $fotoDelete = $user->foto;
             $foto = $user->id . '_' . request()->file('foto')->getClientOriginalName();
@@ -92,6 +91,7 @@ class ProfilesController extends Controller
         }
 
         $user->name = $request->name;
+        $user->email = $request->email;
         $user->nif = $request->nif;
         $user->telefone = $request->telefone;
 
