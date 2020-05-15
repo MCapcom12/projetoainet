@@ -20,7 +20,7 @@ class ContaController extends Controller
        if($user){
            $qry->where('user_id',$user->id);
        }
-       $contas=$qry->paginate(10);
+       $contas=$user->contas()->paginate(10);
       
 
        return view('contas.admin')

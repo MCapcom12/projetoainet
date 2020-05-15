@@ -6,6 +6,8 @@
     <div class="col-3">
         <a href="#" class="btn btn-success" role="button" aria-pressed="true">Novo Movimento</a>
     </div>
+
+ 
     
 </div> 
 <table class = "table">
@@ -23,7 +25,7 @@
     <tbody>
     @foreach($movimentos as $mov)
         <tr>  
-        <td>{{$mov->conta_id}}</td>  
+            <td>{{$mov->conta_id}}</td>  
             <td>{{$mov->data}}</td>         
             <td> {{$mov->valor}}</td>
             <td> {{$mov->saldo_inicial}}</td>
