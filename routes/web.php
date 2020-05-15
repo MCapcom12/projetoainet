@@ -34,7 +34,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //conta
 Route::get('contas','ContaController@admin')->name('contas')->middleware('auth');
 
-
+Route::get('contas/detalhe','ContaController@detalhe')->name('contas.detalhe');
 Route::get('contas/{id}/edit','ContaController@edit')->name('contas.edit');
 Route::get('contas/create','ContaController@create')->name('contas.create');
 
