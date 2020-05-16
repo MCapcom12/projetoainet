@@ -29,20 +29,20 @@ class ContaController extends Controller
         ->withContas($contas);
     }
 
-    public function detalhe(Conta $conta){
-        
-        
+    public function detalhe(Conta $conta){    
+
         return view('contas.detalhe')
         ->withConta($conta);
     }
 
-    public function edit(){
-        return view('contas.edit');
+    public function edit(Conta $conta){
+        dd($conta);
+        //return view('contas.edit')->withConta($conta);
     }
 
     public function create(){
         $user= Auth::id();
-       // dd($user);
+       
         return view('contas.create')->withUser($user);
     }
 

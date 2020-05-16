@@ -5,7 +5,7 @@
 
     <div class= "row mb-3">
         <div class="col-3">
-        <a href="#" class="btn btn-primary" role="button" aria-pressed="true">Editar</a>
+        <a href="{{route('contas.edit',['conta'=>$conta])}}" class="btn btn-primary" role="button" aria-pressed="true">Editar</a>
         </div>
 
         <div class ="col-3" >
