@@ -47,7 +47,7 @@
       <hr class="sidebar-divider d-none d-md-block">
         
           <!-- Nav Item --> <!-- rota para perfil-->
-          <li class="nav-item {{Route::currentRouteName()=='contas'? 'active': ''}}">
+          <li class="nav-item {{Route::currentRouteName()=='Perfil'? 'active': ''}}">
             <a class="nav-link" href="{{route('Perfil')}}">
           <i class="fas fa-fw fa-table"></i>
               <span>Perfil</span></a>
