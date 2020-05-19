@@ -7,13 +7,28 @@
         <a href="#" class="btn btn-success" role="button" aria-pressed="true">Novo Movimento</a>
     </div>
 
+    <div class="col-9">
+        <form method="GET" action="{{route('movimentos')}}" class="form-group">
+            <div class="input-group">
+            <select class="custom-select" name="conta" id="inputConta" aria-label="Conta">
+                <option value="" {{request('conta') == '' ? 'selected' : ''}}>Todas Contas</option>
+                @foreach ($contas as $abr => $conta)
+                <option value={{$conta->id}} {{request('conta') == $conta->id ? 'selected' : ''}}>{{$conta->nome}}</option>
+                @endforeach
+                
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+            </div>
+            </div>
+        </form>
+    </div>
  
     
 </div> 
 <table class = "table">
     <thead>
         <tr>
-            <th>Conta_id</th>
             <th>Data do Movimento</th>
             <th>Valor</th>
             <th>Saldo Inicial</th> 
@@ -23,9 +38,10 @@
         </tr>
     </thead>
     <tbody>
+    
     @foreach($movimentos as $mov)
+    
         <tr>  
-            <td>{{$mov->conta_id}}</td>  
             <td>{{$mov->data}}</td>         
             <td> {{$mov->valor}}</td>
             <td> {{$mov->saldo_inicial}}</td>

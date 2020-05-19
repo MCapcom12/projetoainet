@@ -21,4 +21,7 @@ class Conta extends Model
         parent::__construct($attributes);
     }
     
+    public function movimentos(){
+        return $this->hasMany('App\Movimento');
+    }
 }

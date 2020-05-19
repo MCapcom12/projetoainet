@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $movs = Movimento::count();
         return view('dashboard.index')->withContas($contas)
                                       ->withUsers($users)
-                                       ->withMovimentos($movs);
+                                      ->withMovimentos($movs);
                                       
     }
 
