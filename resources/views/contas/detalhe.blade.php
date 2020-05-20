@@ -5,16 +5,11 @@
 
     <div class= "row mb-3">
         <div class="col-3">
-        <a href="{{route('contas.edit',['conta'=>$conta])}}" class="btn btn-primary" role="button" aria-pressed="true">Editar</a>
+            <a href="{{route('contas.edit',['conta'=>$conta])}}" class="btn btn-primary" role="button" aria-pressed="true">Editar</a>
         </div>
 
-        <div class= "row mb-3">
-    <div class="col-3">
-        <a href="#" class="btn btn-success" role="button" aria-pressed="true">Novo Movimento</a>
-    </div>
-
         <div class ="col-3" >
-        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">Eliminar</a>
+            <a href="#" class="btn btn-danger" role="button" aria-pressed="true">Eliminar</a>
         </div>
     </div>
   
@@ -36,52 +31,57 @@
                 <th>{{$conta->saldo_abertura}}</th>
                 <th>{{$conta->saldo_atual}}</th>
              </tr>
-            
         </tbody>
-
-
     </table>
 
-    <table class = "table">
-    <thead>
-        <tr>
-            <th>Data do Movimento</th>
-            <th>Valor</th>
-            <th>Saldo Inicial</th> 
-            <th>Saldo Final</th>
-            <th>Categoria do Movimento</th>
-            <th>Tipo do Movimento</th>  
-        </tr>
-    </thead>
-    <tbody>
-    
-    @foreach($movimentos as $mov)
-    
-        <tr>  
-            <td>{{$mov->data}}</td>         
-            <td> {{$mov->valor}}</td>
-            <td> {{$mov->saldo_inicial}}</td>
-            <td> {{$mov->saldo_final}}</td>
-            <td> {{$mov->categoria_id}}</td>
-            <td> {{$mov->tipo}}</td>
-            <td><a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
-            <td>
-                <a href="#" class= "btn btn-danger btn-sm">Apagar(Ainda por fazer)</a> 
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
 
+    <div class= "row mb-3">
+        <div class="col-3">
+            <a href="#" class="btn btn-success" role="button" aria-pressed="true">Novo Movimento</a>
+        </div>
+    </div>
+
+    <table class = "table">
+        <thead>
+            <tr>
+                <th>Data do Movimento</th>
+                <th>Valor</th>
+                <th>Saldo Inicial</th> 
+                <th>Saldo Final</th>
+                <th>Categoria do Movimento</th>
+                <th>Tipo do Movimento</th>  
+            </tr>
+        </thead>
+        <tbody>
+        
+        @foreach($movimentos as $mov)
+        
+            <tr>  
+                <td>{{$mov->data}}</td>         
+                <td> {{$mov->valor}}</td>
+                <td> {{$mov->saldo_inicial}}</td>
+                <td> {{$mov->saldo_final}}</td>
+                <td> {{$mov->categoria_id}}</td>
+                <td> {{$mov->tipo}}</td>
+                <td><a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
+                <td>
+                    <a href="#" class= "btn btn-danger btn-sm">Apagar(Ainda por fazer)</a> 
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+
+    {{$movimentos->withQueryString()->links()}}
 
 
    <div class="row mr-3">
         <div class="col-3">
-        <a href="{{route('contas')}}" class="btn btn-primary" role="button" aria-pressed="true">Voltar Atrás</a>
+            <a href="{{route('contas')}}" class="btn btn-primary" role="button" aria-pressed="true">Voltar Atrás</a>
         </div>
    </div>
     
-   {{$movimentos->withQueryString()->links()}}
+   
 
 
 @endsection
