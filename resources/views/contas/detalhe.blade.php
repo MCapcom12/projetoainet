@@ -9,7 +9,11 @@
         </div>
 
         <div class ="col-3" >
-            <a href="#" class="btn btn-danger" role="button" aria-pressed="true">Eliminar</a>
+            <form action="{{route('contas.destroy', ['conta' => $conta])}}" method="POST">
+                @csrf
+                @method("DELETE")
+                <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+            </form>
         </div>
     </div>
   
@@ -33,6 +37,10 @@
              </tr>
         </tbody>
     </table>
+
+    <div  class= "text-center">
+        <h1 >Movimentos Da Conta</h1>
+    </div>
 
 
     <div class= "row mb-3">
@@ -72,11 +80,12 @@
         </tbody>
     </table>
 
-    {{$movimentos->withQueryString()->links()}}
+   
 
 
    <div class="row mr-3">
-        <div class="col-3">
+   {{$movimentos->withQueryString()->links()}}
+        <div class="ml-auto" >
             <a href="{{route('contas')}}" class="btn btn-primary" role="button" aria-pressed="true">Voltar Atrás</a>
         </div>
    </div>
