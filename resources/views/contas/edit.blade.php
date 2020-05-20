@@ -1,13 +1,13 @@
 @extends('layout_admin')
-@section('title','Alterar Disciplina' )
+@section('title','Alterar Conta' )
 @section('content')
-    <form method="GET" action="#" class="form-group">
+    <form method="POST" action="{{route('contas.update',['conta'=>$conta])}}" class="form-group">
         @csrf
         @method('PUT')
         @include('contas.partials.create-edit')
         <div class="form-group text-right">
-            <button type="submit" class="btn btn-sucsess" name="ok">Save</button>
-            <a href="#" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-success" name="ok">Save</button>
+            <a href="{{route('contas.detalhe',['conta'=>$conta])}}" class="btn btn-secondary">Cancel</a>
         </div>
 
     </form>
