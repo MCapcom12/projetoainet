@@ -36,25 +36,40 @@ class ContaController extends Controller
     }
 
     public function edit(Conta $conta){
-        dd($conta);
-        //return view('contas.edit')->withConta($conta);
+        
+        return view('contas.edit')->withConta($conta);
     }
+
+    public function update(ContaPost $request, Conta $conta){
+        $validated_data =$request -> validated();
+        $conta->fill($validated_data);
+        $conta->save();
+
+        
+
+        return redirect()->route('contas.detalhe',['conta'=>$conta])
+           
+            ->with('alert-msg', 'Conta "' .$conta->nome. '"foi alterada com sucesso!')
+            ->with('alert-type','success');
+        }
 
     public function create(){
         $user= Auth::id();
-       
-        return view('contas.create')->withUser($user);
+       $newConta= new Conta;
+        return view('contas.create')->withUser($user)
+        ->withConta($newConta);
     }
 
     public function store(ContaPost $request){
         
-        $validated_data = $request->validated();
+       
         
+        $validated_data = $request->validated();
        Conta::create($validated_data);
 
         return redirect()->route('contas')
             ->with('alert-msg','Conta criada com sucesso')
-            ->with('alert-type','success');
+           ->with('alert-type','success');
     }
 
    
