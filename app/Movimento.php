@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Movimento extends Model
 {
@@ -19,6 +20,14 @@ class Movimento extends Model
     protected $hidden = [
         
     ];
+
+
+    public function __construct(array $attributes = [])
+    {
+        $this->user_id = Auth::id();
+     
+        parent::__construct($attributes);
+    }
 
     /**
      * The attributes that should be cast to native types.

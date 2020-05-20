@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Conta;
-use App\User;
+use App\User; 
+use App\Movimento; 
 use App\Http\Requests\ContaPost;
 
 
@@ -29,10 +30,14 @@ class ContaController extends Controller
         ->withContas($contas);
     }
 
-    public function detalhe(Conta $conta){    
+    public function detalhe(Conta $conta){ 
+
+        $movs=$conta->movimentos()->paginate(10);
 
         return view('contas.detalhe')
-        ->withConta($conta);
+        ->withConta($conta)
+        ->withMovimentos($movs);
+
     }
 
     public function edit(Conta $conta){

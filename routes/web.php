@@ -46,7 +46,10 @@ Route::put('contas/{conta}/detalhe','ContaController@update')->name('contas.upda
 Route::get('users','UserController@index')->name('users')->middleware('auth');
 
 //Movimentos
-Route::get('Movimentos', 'MovimentoController@index')->name('Movimentos')->middleware('auth');
+Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
+
+
+
 
 //Perfil
 Route::get('Perfil', 'PerfilController@index')->name('Perfil')->middleware('auth');
