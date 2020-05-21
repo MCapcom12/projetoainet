@@ -71,11 +71,35 @@ class ContaController extends Controller
        
         
         $validated_data = $request->validated();
+        $validated_data['user_id'] = Auth::id();
+        $validated_data['saldo_atual'] = $validated_data['saldo_abertura'];
        Conta::create($validated_data);
 
         return redirect()->route('contas')
             ->with('alert-msg','Conta criada com sucesso')
            ->with('alert-type','success');
+    }
+
+    public function destroy(Conta $conta){
+        $oldName = $conta->nome;
+        try {
+            $conta->delete();
+            return redirect()->route('contas')
+            ->with('alert-msg', 'Conta "'.$conta->nome.'"foi apagada com sucesso')
+            ->with('alert-type','success');
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            if ($th->errorInfo[1]=1451) {
+                return redirect()->route('contas')
+                ->with('alert-msg', 'Não foi possível apagar a Conta "' . $oldName . '", porque esta conta já está em uso!')
+                    ->with('alert-type', 'danger');
+            }else{
+                return redirect()->route('contas')
+                    ->with('alert-msg', 'Não foi possível apagar a Conta "' . $oldName . '". Erro: ' . $th->errorInfo[2])
+                    ->with('alert-type', 'danger');
+            }
+        }
     }
 
    

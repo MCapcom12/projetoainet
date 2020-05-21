@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 
 class ContaPost extends FormRequest
@@ -32,13 +33,14 @@ class ContaPost extends FormRequest
        
 
         return [
-            'nome'=>'required','string','max:20',Rule::unique('contas')->where(function ($query) {
+            'nome'=>['required','string','max:20',Rule::unique('contas')->where(function ($query) {
                
-                 return $query->where('user_id',$this->user_id);
-            }) ,
+                 return $query->where('user_id',Auth::id());
+            }) ],
             
             'descricao'=>'nullable|string',
             'saldo_abertura'=>'required|numeric'
+           
         ];
     }
 

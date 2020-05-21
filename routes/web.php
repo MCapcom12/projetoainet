@@ -41,6 +41,8 @@ Route::get('contas/create','ContaController@create')->name('contas.create');
 Route::post('contas/create','ContaController@store')->name('contas.store');
 
 Route::put('contas/{conta}/detalhe','ContaController@update')->name('contas.update');
+Route::delete('contas/{conta}/detalhe','ContaController@destroy')->name('contas.destroy');
+
 
 //users
 Route::get('users','UserController@index')->name('users')->middleware('auth');
