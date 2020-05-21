@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Editar os teus detalhes') }}</div>
+                <div class="card-header">{{ __('Editar os seus detalhes') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('Update') }}" enctype="multipart/form-data">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Done') }}
@@ -84,6 +84,20 @@
                             </div>
                         </div>
                     </form>
+
+
+                    <form action="{{ route('deleteUser') }}" method="POST">
+                    @csrf
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    {{ __('Delete User') }}
+                                </button>
+                                <input type="password" id="passwordDelete" name="passwordDelete" placeholder="Introduza a password">
+                            </div>
+                        </div>                    
+                    </form>
+
                 </div>
             </div>
         </div>

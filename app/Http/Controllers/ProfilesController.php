@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class ProfilesController extends Controller
 {
@@ -106,8 +108,18 @@ class ProfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteUser(Request $request)
     {
-        //
+        $id = Auth::user();
+        $request->validate([
+            'passwordDelete' => 'required',
+        ]);
+
+        if (Hash::check($request->passwordDelete, $id->password)) {
+
+            $id->delete();
+            return redirect('/');
+        }
+            //error message
     }
 }

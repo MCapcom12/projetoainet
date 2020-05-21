@@ -42,6 +42,7 @@ Route::post('contas/create','ContaController@store')->name('contas.store');
 
 //users
 Route::get('users','UserController@index')->name('users')->middleware('auth');
+Route::get('/search', 'UserController@search');
 
 //Movimentos
 Route::get('Movimentos', 'MovimentoController@index')->name('Movimentos')->middleware('auth');
@@ -52,3 +53,4 @@ Route::get('Perfil/Edit', 'ProfilesController@index')->name('Edit')->middleware(
 Route::post('Perfil/Edit', 'ProfilesController@update')->name('Update');
 Route::get('Perfil/ChangePassword/', 'ChangePasswordController@index');
 Route::post('Perfil/ChangePassword/', 'ChangePasswordController@store')->name('ChangePassword');
+Route::post('Perfil/Delete', 'ProfilesController@deleteUser')->name('deleteUser');
