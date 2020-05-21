@@ -30,7 +30,7 @@
         <div class="sidebar-brand-icon">
             <img src="/img/logo.png" alt="Logo" class="logo-img">
         </div>
-        <div class="sidebar-brand-text mx-3">DEI</div>
+        <div class="sidebar-brand-text mx-3">Finanças Pessoais</div>
       </a>
 
       <!-- Divider -->
@@ -65,10 +65,10 @@
               <span>Utilizadores</span></a>
           </li>
 
-          <li class="nav-item {{Route::currentRouteName()=='Movimentos'? 'active': ''}}">
-            <a class="nav-link" href="{{route('Movimentos')}}">
+          <li class="nav-item">
+            <a class="nav-link" href=#>
           <i class="fas fa-fw fa-table"></i>
-              <span>Movimentos</span></a>
+              <span>Estatisticas do Utilizador</span></a>
           </li>
 
       <!-- Divider -->
@@ -114,9 +114,9 @@
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{route('contas')}}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Contas(podemos usar esta parte para um novo acesso ao perfil e contas)
+                    Contas
                     </a>
                     <div class="dropdown-divider"></div>
                     

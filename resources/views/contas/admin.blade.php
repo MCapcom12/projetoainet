@@ -12,7 +12,7 @@
 <table class = "table">
     <thead>
         <tr>
-            <th>id</th>
+        <th>ID</th>
             <th>nome</th>
             <th>saldo atual</th> 
             <th></th>
@@ -20,9 +20,10 @@
         </tr>
     </thead>
     <tbody>
+
     @foreach($contas as $cont)
-        <tr>   
-            <td>{{$cont->id}}</td>         
+        <tr>  
+        <td> {{$cont->id}}</td>      
             <td> {{$cont->nome}}</td>
             <td> {{$cont->saldo_atual}}</td>
             <td><a href="{{route('contas.detalhe', ['conta'=>$cont])}}" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Detalhe da Conta </a></td>

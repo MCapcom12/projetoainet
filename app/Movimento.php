@@ -3,12 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Movimento extends Model
 {
     //
+    public $timestamps = false;
     protected $fillable = [
-        'id','conta_id', 'data', 'valor', 'saldo_inicial', 'saldo_final', 'tipo','categoria_id', 'descricao', 'imagem_doc', 'deleted_at'
+        'conta_id', 'data', 'valor', 'saldo_inicial', 'saldo_final', 'tipo','categoria_id', 'descricao', 'imagem_doc'
     ];
 
     /**
@@ -19,6 +21,7 @@ class Movimento extends Model
     protected $hidden = [
         
     ];
+
 
     /**
      * The attributes that should be cast to native types.

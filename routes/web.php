@@ -40,12 +40,22 @@ Route::get('contas/create','ContaController@create')->name('contas.create');
 
 Route::post('contas/create','ContaController@store')->name('contas.store');
 
+Route::put('contas/{conta}/detalhe','ContaController@update')->name('contas.update');
+Route::delete('contas/{conta}/detalhe','ContaController@destroy')->name('contas.destroy');
+
+
 //users
 Route::get('users','UserController@index')->name('users')->middleware('auth');
 Route::get('/search', 'UserController@search');
 
 //Movimentos
-Route::get('Movimentos', 'MovimentoController@index')->name('Movimentos')->middleware('auth');
+Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
+Route::get('contas/{conta}/movimentos/create', 'MovimentoController@create')->name('movimentos.create');
+Route::post('contas/{conta}/movimentos/create', 'MovimentoController@store')->name('movimentos.store');
+//Route::get('contas/{conta}/movimentos/{movimento}/edit');
+//Route::get('contas/{conta}/movimentos/{movimento}');
+//Route::get('movimentos/{movimento}/edit');
+//Route::get('movimentos/{movimento}');
 
 //Perfil
 Route::get('Perfil', 'PerfilController@index')->name('Perfil')->middleware('auth');
