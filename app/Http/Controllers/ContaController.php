@@ -70,6 +70,8 @@ class ContaController extends Controller
        
         
         $validated_data = $request->validated();
+        $validated_data['user_id'] = Auth::id();
+        $validated_data['saldo_atual'] = $validated_data['saldo_abertura'];
        Conta::create($validated_data);
 
         return redirect()->route('contas')
