@@ -36,7 +36,6 @@ td{
 
 </style>
 
-
 <table style="width: 100%">
         <thead>
             <tr>
@@ -47,8 +46,8 @@ td{
         </thead>
         <tbody>
         <tr>
-                <td> {{count($contas)}}</td>
-                <td> {{count($users)}}</td>
+                <td> {{$contas}}</td>
+                <td> {{$users}}</td>
                 <td> {{$movimentos}}</td>
             </tr>
         </tbody>
@@ -61,18 +60,5 @@ td{
 
 
 
-    <!-- <div class="row">
-  <div class="column" style="">
-    <h2>Número de Contas</h2>
-    <p>{{count($contas)}}</p>
-  </div>
-  <div class="column" style="">
-    <h2>Número de Utilizadores</h2>
-    <p>{{count($users)}}</p>
-  </div>
-  <div class="column" style="">
-    <h2>Column 3</h2>
-    <p>Some text..</p>
-  </div>
-</div> -->
+
 @endsection

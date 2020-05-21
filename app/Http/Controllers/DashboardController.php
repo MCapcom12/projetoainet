@@ -11,8 +11,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $contas = Conta::all();
-        $users = User::all();
+        $contas = Conta::count();
+        $users = User::count();
         $movs = Movimento::count();
         return view('dashboard.index')->withContas($contas)
                                       ->withUsers($users)
