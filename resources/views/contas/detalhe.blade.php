@@ -37,7 +37,7 @@
 
     <div class= "row mb-3">
         <div class="col-3">
-            <a href="#" class="btn btn-success" role="button" aria-pressed="true">Novo Movimento</a>
+            <a href="{{route('movimentos.create', ['conta' => $conta->id])}}" class="btn btn-success" role="button" aria-pressed="true">Novo Movimento</a>
         </div>
     </div>
 

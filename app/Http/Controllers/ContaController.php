@@ -19,12 +19,13 @@ class ContaController extends Controller
        $user= $request->user() ;
       
        $qry= Conta::query();
+       //dd($qry);
 
        if($user){
            $qry->where('user_id',$user->id);
        }
        $contas=$user->contas()->paginate(10);
-      
+      //dd($contas);
 
        return view('contas.admin')
         ->withContas($contas);

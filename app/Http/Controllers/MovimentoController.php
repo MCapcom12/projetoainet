@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Movimento;
 use App\Conta;
+use App\Http\Requests\MovimentoPost;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class MovimentoController extends Controller
             $movs = $user->movimentos()->paginate(10);
         }
 
-         $contas=$user->contas;
+        $contas=$user->contas;
 
          //$movs=$user->movimentos()->paginate(10);
          //$movs = Movimento::paginate(15);
@@ -41,10 +42,49 @@ class MovimentoController extends Controller
         $selectedConta= Conta::groupBy('nome')->pluck('nome')->toArray(); 
         //dd($selectedConta);
 
-         return view('Movimentos.index')->withMovimentos($movs)
+         return view('movimentos.index')->withMovimentos($movs)
                                         ->withContas($contas)
-                                        ->withSelectedConta($selectedConta);
-                                 
+                                        ->withSelectedConta($selectedConta);                        
     }
+
+
+    public function create(Conta $conta){
+
+        
+        $newMovimento= new Movimento;
+        
+        return view('movimentos.create')->withConta($conta)
+                                        ->withMovimento($newMovimento);
+    }
+
+
+
+    public function store(MovimentoPost $request, Conta $conta){
+
+        
+        $validated_data = $request->validated();
+        $validated_data["conta_id"]=$conta->id;
+        $validated_data['saldo_inicial']=$conta->saldo_atual;
+        //dd($validated_data['saldo_inicial']);
+        if($validated_data["tipo"]=='D'){
+            $validated_data["saldo_final"]= $validated_data["saldo_inicial"]-$validated_data['valor'];
+        
+        }else{
+            $validated_data["saldo_final"]= $validated_data["saldo_inicial"]+$validated_data['valor'];      
+            //dd($validated_data["saldo_final"]);
+        }
+
+        $conta->saldo_atual=$validated_data["saldo_final"];
+        //dd($conta->saldo_atual);
+         
+        Movimento::create($validated_data);
+        $conta->save();
+        
+
+        return redirect()->route('contas.detalhe' ,['conta'=>$conta])
+            ->with('alert-msg','Movimento criada com sucesso')
+           ->with('alert-type','success');
+    }
+
     
 }

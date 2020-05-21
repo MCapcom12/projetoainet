@@ -47,9 +47,12 @@ Route::get('users','UserController@index')->name('users')->middleware('auth');
 
 //Movimentos
 Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
-
-
-
+Route::get('contas/{conta}/movimentos/create', 'MovimentoController@create')->name('movimentos.create');
+Route::post('contas/{conta}/movimentos/create', 'MovimentoController@store')->name('movimentos.store');
+//Route::get('contas/{conta}/movimentos/{movimento}/edit');
+//Route::get('contas/{conta}/movimentos/{movimento}');
+//Route::get('movimentos/{movimento}/edit');
+//Route::get('movimentos/{movimento}');
 
 //Perfil
 Route::get('Perfil', 'PerfilController@index')->name('Perfil')->middleware('auth');
