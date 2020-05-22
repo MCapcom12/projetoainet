@@ -9,6 +9,8 @@ use App\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Conta;
+use App\Movimento;
 
 class ProfilesController extends Controller
 {
@@ -116,8 +118,16 @@ class ProfilesController extends Controller
         ]);
 
         if (Hash::check($request->passwordDelete, $id->password)) {
-
-            $id->delete();
+            //delete auth
+            //$id->autorizacoes_contas()->delete();
+            //DB::table('movimentos')->where('id_user', '>', 100)->dd();
+            //delete dos movimentos das contas do user
+            $id->movimentos()->delete();
+            //delete das contas
+            $id->contas()->delete();
+            //delete do user
+            //$id->delete();      
+            
             return redirect('/');
         }
             //error message
