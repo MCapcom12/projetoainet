@@ -126,7 +126,8 @@ class ProfilesController extends Controller
             //delete das contas
             $id->contas()->delete();
             //delete do user
-            //$id->delete();      
+            //$id->delete();
+            //User::destroy($id->id);   
             
             return redirect('/');
         }
