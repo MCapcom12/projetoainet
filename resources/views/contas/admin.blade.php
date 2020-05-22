@@ -7,8 +7,14 @@
     <div class="col-3">
         <a href="{{route('contas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Conta</a>
     </div>
+
+    <div class="ml-auto">
+        <a href="{{route('contas.lixeira')}}" class= "btn btn-danger" role="button" aria-pressed="true">Contas Desativadas</a>
+    </div>
     
 </div> 
+
+
 <table class = "table">
     <thead>
         <tr>

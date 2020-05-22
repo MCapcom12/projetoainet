@@ -43,6 +43,12 @@ Route::post('contas/create','ContaController@store')->name('contas.store');
 Route::put('contas/{conta}/detalhe','ContaController@update')->name('contas.update');
 Route::delete('contas/{conta}/detalhe','ContaController@destroy')->name('contas.destroy');
 
+//vai buscar as contas eliminadas de um determinado user
+Route::get('contas/lixeira','ContaController@lixeira')->name('contas.lixeira');
+Route::delete('contas/{conta}/forceDelete','ContaController@forceDelete')->name('contas.forceDelete');
+Route::get('contas/{conta}/restore','ContaController@restore')->name('contas.restore');
+Route::post('contas/{conta}/restore','ContaController@restore')->name('contas.restore');
+
 
 //users
 Route::get('users','UserController@index')->name('users')->middleware('auth');

@@ -102,5 +102,31 @@ class ContaController extends Controller
         }
     }
 
+    public function lixeira(){
+
+        $user= Auth::id();
+        $contas_eliminadas = Conta::onlyTrashed()
+            ->where('user_id',$user)
+            ->get();
+          //dd($contas_eliminadas);
+        return view('contas.lixeira')
+            ->withContas($contas_eliminadas);    
+    }
+
+    public function forceDelete(Conta $conta){
+        $conta->forceDelete();
+
+        return redirect()->route('contas')
+        ->with('alert-msg', 'Conta "'.$conta->nome.'"foi apagada com sucesso')
+            ->with('alert-type','success');
+
+    }
+
+    public function restore(Conta $conta){
+        $conta->restore();
+        return redirect()->route('contas')
+            ->with('alert-msg', 'Conta "'.$conta->nome.'"foi restaurada com sucesso')
+            ->with('alert-type','success');
+    }
    
 }
