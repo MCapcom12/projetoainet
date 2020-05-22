@@ -6,9 +6,6 @@
 <table class = "table">
     <thead>
         <tr>
-            <th>Foto</th>
-            <th>Nome</th>
-            <th>Email</th> 
             <div class="col-md-4">
                 <form action="/search" method="get">
                     <div class="input-group">
@@ -19,6 +16,14 @@
                     </div>
                 </form>
             </div>
+            <th>Foto</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Tipo</th>
+            <th></th>
+            <th>Block</th>
+            <th></th>
+            <th></th>
             <th></th>
             <th></th> 
             <th></th> 
@@ -30,6 +35,24 @@
             <td><img src="{{$id->foto ? $path = '/storage/fotos/' . $id->foto : asset('img/default_img.png') }}" style="width:50px;height:50px;float:left; border-radius: 50%; margin-right: 25px;"></td>         
             <td>{{$id->name}}</td>
             <td>{{$id->email}}</td>
+            <td><?php
+            if ($id->adm){
+                echo "Admin";
+            }else{
+                echo "Regular";
+            }
+            ?>          
+            </td>
+            <td><a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar</a></td>
+            <td><?php
+            if ($id->bloqueado){
+                echo "Blocked";
+            }else{
+                echo "Not Blocked";
+            }
+            ?> 
+            </td>
+            <td><a href="#" class= "btn btn-danger btn-sm">Bloquear/Desbloquear</a></td>
         </tr>
     @endforeach
     </tbody>

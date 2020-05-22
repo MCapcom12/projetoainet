@@ -52,6 +52,7 @@ Route::post('contas/{conta}/restore','ContaController@restore')->name('contas.re
 
 //users
 Route::get('users','UserController@index')->name('users')->middleware('auth');
+Route::get('/search', 'UserController@search');
 
 //Movimentos
 Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
@@ -68,3 +69,4 @@ Route::get('Perfil/Edit', 'ProfilesController@index')->name('Edit')->middleware(
 Route::post('Perfil/Edit', 'ProfilesController@update')->name('Update');
 Route::get('Perfil/ChangePassword/', 'ChangePasswordController@index');
 Route::post('Perfil/ChangePassword/', 'ChangePasswordController@store')->name('ChangePassword');
+Route::post('Perfil/Delete', 'ProfilesController@deleteUser')->name('deleteUser');

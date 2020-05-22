@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use App\Conta;
+use App\Movimento;
 
 class ProfilesController extends Controller
 {
@@ -106,8 +110,27 @@ class ProfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteUser(Request $request)
     {
-        //
+        $id = Auth::user();
+        $request->validate([
+            'passwordDelete' => 'required',
+        ]);
+
+        if (Hash::check($request->passwordDelete, $id->password)) {
+            //delete auth
+            //$id->autorizacoes_contas()->delete();
+            //DB::table('movimentos')->where('id_user', '>', 100)->dd();
+            //delete dos movimentos das contas do user
+            $id->movimentos()->delete();
+            //delete das contas
+            $id->contas()->delete();
+            //delete do user
+            //$id->delete();
+            //User::destroy($id->id);   
+            
+            return redirect('/');
+        }
+            //error message
     }
 }
