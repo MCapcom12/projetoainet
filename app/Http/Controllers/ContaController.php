@@ -113,19 +113,26 @@ class ContaController extends Controller
             ->withContas($contas_eliminadas);    
     }
 
-    public function forceDelete(Conta $conta){
+    public function forceDelete(int  $id){
+        $conta=Conta::onlyTrashed()
+        ->where('id',$id);
+       
         $conta->forceDelete();
 
         return redirect()->route('contas')
-        ->with('alert-msg', 'Conta "'.$conta->nome.'"foi apagada com sucesso')
+        ->with('alert-msg', 'Conta foi apagada com sucesso')
             ->with('alert-type','success');
 
     }
 
-    public function restore(Conta $conta){
+    public function restore(int $id){
+        
+        $conta=Conta::onlyTrashed()
+            ->where('id',$id);
+       
         $conta->restore();
         return redirect()->route('contas')
-            ->with('alert-msg', 'Conta "'.$conta->nome.'"foi restaurada com sucesso')
+            ->with('alert-msg', 'Conta  foi restaurada com sucesso')
             ->with('alert-type','success');
     }
    
