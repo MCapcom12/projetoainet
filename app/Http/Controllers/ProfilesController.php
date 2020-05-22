@@ -118,16 +118,26 @@ class ProfilesController extends Controller
         ]);
 
         if (Hash::check($request->passwordDelete, $id->password)) {
-            //delete auth
-            //$id->autorizacoes_contas()->delete();
+            //$user = User::where('id', '3')->first();
+            //dd($id->autorizacoes_contas);
             //DB::table('movimentos')->where('id_user', '>', 100)->dd();
+            
+            /*
             //delete dos movimentos das contas do user
-            $id->movimentos()->delete();
+            $id->movimentos()->forceDelete();
+            
+            dd($id->id);
+
+            //delete auth
+            $id->autorizacoes_contas()->delete();
+
             //delete das contas
-            $id->contas()->delete();
+            $id->contas()->forceDelete();
+
             //delete do user
-            //$id->delete();
-            //User::destroy($id->id);   
+            $id->delete();
+            //User::destroy($id->id); 
+            */
             
             return redirect('/');
         }

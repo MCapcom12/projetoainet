@@ -29,4 +29,28 @@ class UserController extends Controller
             return view('users.index', ['users' => $users]);
         }
     }
+
+    public function adminChangeType(User $id){
+        dd($id->name);
+        if(Auth::user()==$id){
+            //erro
+        }else{
+            if($id->adm == 1){
+                //$id->adm = $noadm;
+                dd('sucesso');
+            }else{
+                //$id->adm = $adm;
+                dd('insucesso');
+        }
+        
+        $id->save();
+        
+        }
+
+        return redirect()->back();
+    }
+
+    public function adminChangeBlock(Request $request){
+        return redirect()->back();
+    }
 }

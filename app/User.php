@@ -44,4 +44,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function movimentos(){
         return $this->hasManyThrough('App\Movimento','App\Conta','user_id','conta_id','id','id');
     }
+    /*
+    public function autorizacoes_contas(){
+        return $this->belongsToMany('App\Conta','autorizacoes_contas');
+    }
+    */
 }

@@ -43,8 +43,9 @@
             }
             ?>          
             </td>
-            <td><a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar</a></td>
-            <td><?php
+            <td><a href="{{route('changeType', ['id'=>$id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a></td>
+            <td>
+            <?php
             if ($id->bloqueado){
                 echo "Blocked";
             }else{

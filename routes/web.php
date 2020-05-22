@@ -53,6 +53,8 @@ Route::post('contas/{conta}/restore','ContaController@restore')->name('contas.re
 //users
 Route::get('users','UserController@index')->name('users')->middleware('auth');
 Route::get('/search', 'UserController@search');
+Route::get('users/changeType','UserController@adminChangeType')->name('changeType');
+Route::get('users/changeBlock','UserController@adminChangeBlock')->name('changeBlock');
 
 //Movimentos
 Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
