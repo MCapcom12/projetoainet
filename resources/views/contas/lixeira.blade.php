@@ -21,13 +21,16 @@
                 <th>{{$cont->id}}</th>
                 <th>{{$cont->nome}}</th>
                 <th>
-                    <form method="POST" action="{{route('contas.restore',['conta'=>$cont])}}">
+                    <form method="POST" action="{{route('contas.restore',['id'=>$cont->id])}}">
                     @csrf
-                    <button type="submit" class="btn btn-info">Restore User</button>
+                    <button type="submit" class="btn btn-info">Restaurar</button>
                     </form>
                 </th>
                 <th>
-                
+                <form method="POST" action="{{route('contas.forceDelete',['id'=>$cont->id])}}">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
                 </th>
             </tr>
         @endforeach    

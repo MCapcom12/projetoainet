@@ -45,9 +45,8 @@ Route::delete('contas/{conta}/detalhe','ContaController@destroy')->name('contas.
 
 //vai buscar as contas eliminadas de um determinado user
 Route::get('contas/lixeira','ContaController@lixeira')->name('contas.lixeira');
-Route::delete('contas/{conta}/forceDelete','ContaController@forceDelete')->name('contas.forceDelete');
-Route::get('contas/{conta}/restore','ContaController@restore')->name('contas.restore');
-Route::post('contas/{conta}/restore','ContaController@restore')->name('contas.restore');
+Route::post('contas/{id}/restore','ContaController@restore')->name('contas.restore');
+Route::post('contas/{id}/forceDelete','ContaController@forceDelete')->name('contas.forceDelete');
 
 
 //users
