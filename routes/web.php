@@ -71,3 +71,8 @@ Route::post('Perfil/Edit', 'ProfilesController@update')->name('Update');
 Route::get('Perfil/ChangePassword/', 'ChangePasswordController@index');
 Route::post('Perfil/ChangePassword/', 'ChangePasswordController@store')->name('ChangePassword');
 Route::post('Perfil/Delete', 'ProfilesController@deleteUser')->name('deleteUser');
+
+
+//Estatisticas
+
+Route::get('Estatisticas','EstatisticaController@index')->name('estatistica')->middleware('auth');

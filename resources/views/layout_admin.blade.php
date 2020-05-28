@@ -15,6 +15,9 @@
   <!-- Custom styles for this template-->
   <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
+  <!--ChartStyle-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+
 </head>
 
 <body id="page-top">
@@ -65,8 +68,8 @@
               <span>Utilizadores</span></a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href=#>
+          <li class="nav-item {{Route::currentRouteName()=='estatistica'? 'active': ''}}">
+            <a class="nav-link" href="{{route('estatistica')}}">
           <i class="fas fa-fw fa-table"></i>
               <span>Estatisticas do Utilizador</span></a>
           </li>
@@ -249,6 +252,12 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+
+  <!--ChartScript-->
+
+  @if($estatistica ?? '')
+    {!! $estatistica->script() !!}
+    @endif
 
 
 </body>
