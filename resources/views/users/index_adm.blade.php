@@ -2,6 +2,12 @@
 @section('title','UTILIZADORES')
 @section('content')
 
+@if (session('alert'))
+    <div class="alert alert-warning">
+        {{ session('alert') }}
+    </div>
+@endif
+
 <div> 
 <table class = "table">
     <thead>
@@ -12,9 +18,18 @@
                         <input type="search" name="search" class="form-control">
                         <span class="input-group-prepend">
                             <button type="submit" class="btn btn-primary">Search</button>
+                            
                         </span>
+                            <div>
+                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Admin</a>
+                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Regular</a>
+                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Blocked</a>
+                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Not Blocked</a>
+                            </div>
+
                     </div>
                 </form>
+
             </div>
             <th>Foto</th>
             <th>Nome</th>
@@ -30,6 +45,7 @@
         </tr>
     </thead>
     <tbody>
+    
     @foreach($users as $id)
         <tr>   
             <td><img src="{{$id->foto ? $path = '/storage/fotos/' . $id->foto : asset('img/default_img.png') }}" style="width:50px;height:50px;float:left; border-radius: 50%; margin-right: 25px;"></td>         
@@ -43,7 +59,7 @@
             }
             ?>          
             </td>
-            <td><a href="{{route('changeType', ['id'=>$id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a></td>
+            <td><a href="{{route('changeType', $id)}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a></td>
             <td>
             <?php
             if ($id->bloqueado){
@@ -53,7 +69,7 @@
             }
             ?> 
             </td>
-            <td><a href="#" class= "btn btn-danger btn-sm">Bloquear/Desbloquear</a></td>
+            <td><a href="{{route('changeBlock', $id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Bloquear/Desbloquear</a></td>
         </tr>
     @endforeach
     </tbody>
