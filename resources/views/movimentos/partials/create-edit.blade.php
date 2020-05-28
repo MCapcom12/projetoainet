@@ -27,3 +27,28 @@
         <div class="small text-danger">{{$message}}</div>
     @enderror
 </div>
+
+<div class="form-group">
+    <label for="inputCategoria">Categoria do Movimento</label>
+    <select class="form-control" name="categoria_id" id="inputCategoria">
+
+        <option value="" {{'' == old('categoria_id', $movimento->categoria_id) ? 'selected' : ''}}>Sem Categoria</option>
+
+        
+            @foreach ($categorias as $categ => $id)
+                <option value={{$categ+1}} {{$categ+1 == old('categoria_id', $movimento->categoria_id)  ? 'selected' : ''}}>{{$id->nome}} ({{$id->tipo}})</option>
+            @endforeach
+        
+    </select>
+    @error('categoria_id')
+        <div class="small text-danger">{{$message}}</div>
+    @enderror
+</div>
+
+<div class="form-group">
+    <label for="inputDescricao">Descrição do Movimento</label>
+    <textarea class="form-control" name="descricao" id="inputDescricao" rows=10>{{old('descricao', $movimento->descricao)}}</textarea>
+    @error('descricao')
+        <div class="small text-danger">{{$message}}</div>
+    @enderror
+</div>

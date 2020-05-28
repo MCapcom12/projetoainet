@@ -15,13 +15,6 @@ class Conta extends Model
     protected $fillable=['user_id','nome','descricao','saldo_atual','saldo_abertura','data_ultimo_movimento'];
 
 
-    
-   
-
-    
-
-   
-    
     public function movimentos(){
         return $this->hasMany('App\Movimento');
     }

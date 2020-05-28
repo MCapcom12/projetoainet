@@ -35,4 +35,6 @@ class Movimento extends Model
     public function contas(){
         return $this->belongsTo('App\Conta','conta_id');
     }
+
+    
 }

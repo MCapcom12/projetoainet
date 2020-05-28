@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Movimento;
 use App\Conta;
+use App\Categoria;
 use App\Http\Requests\MovimentoPost;
 
 
@@ -50,10 +51,10 @@ class MovimentoController extends Controller
 
     public function create(Conta $conta){
 
-        
+        $categorias=Categoria::all();
         $newMovimento= new Movimento;
-        
         return view('movimentos.create')->withConta($conta)
+                                        ->withCategorias($categorias)
                                         ->withMovimento($newMovimento);
     }
 
@@ -63,6 +64,53 @@ class MovimentoController extends Controller
 
         
         $validated_data = $request->validated();
+        if($validated_data["categoria_id"]<=12 && $validated_data["tipo"] == 'D'){
+            return redirect()->back()->with('alert-msg','Movimento não criado. Tipo e Categoria do Movimento não coincidem!')
+                                     ->with('alert-type','danger');
+        }
+        
+        if($validated_data["categoria_id"]>12 && $validated_data["tipo"] == 'R'){
+            return redirect()->back()->with('alert-msg','Movimento não criado. Tipo e Categoria do Movimento não coincidem!')
+                                     ->with('alert-type','danger');
+        }
+        
+        $validated_data["conta_id"]=$conta->id;
+        $validated_data['saldo_inicial']=$conta->saldo_atual;
+        
+        //dd($validated_data['saldo_inicial']);
+        if($validated_data["tipo"]=='D'){
+            $validated_data["saldo_final"]= $validated_data["saldo_inicial"]-$validated_data['valor'];
+        
+        }else{
+            $validated_data["saldo_final"]= $validated_data["saldo_inicial"]+$validated_data['valor'];      
+            //dd($validated_data["saldo_final"]);
+        }
+
+        $conta->saldo_atual=$validated_data["saldo_final"];
+        //dd($conta->saldo_atual);
+        
+        //dd($validated_data);
+        Movimento::create($validated_data);
+        $conta->save();
+        
+
+        return redirect()->route('contas.detalhe' ,['conta'=>$conta])
+            ->with('alert-msg','Movimento criada com sucesso')
+           ->with('alert-type','success');
+    }
+
+
+    public function edit(Movimento $movimento){
+        //dd($movimento->id);
+        $categorias=Categoria::all();
+        return view('movimentos.edit')->withCategorias($categorias)                                 
+                                      ->withMovimento($movimento);
+    }
+
+
+    public function update(MovimentoPost $request, Movimento $movimento, Conta $conta){
+        
+        $validated_data =$request -> validated();
         $validated_data["conta_id"]=$conta->id;
         $validated_data['saldo_inicial']=$conta->saldo_atual;
         //dd($validated_data['saldo_inicial']);
@@ -75,16 +123,16 @@ class MovimentoController extends Controller
         }
 
         $conta->saldo_atual=$validated_data["saldo_final"];
-        //dd($conta->saldo_atual);
-         
-        Movimento::create($validated_data);
-        $conta->save();
+
+        //dd($movimento->contas);
+        $movimento->fill($validated_data);
+        $movimento->save();
+
         
-
-        return redirect()->route('contas.detalhe' ,['conta'=>$conta])
-            ->with('alert-msg','Movimento criada com sucesso')
-           ->with('alert-type','success');
+        return redirect()->route('contas.detalhe', $movimento->conta_id)
+           
+            ->with('alert-msg', 'Movimento foi alterado com sucesso!')
+            ->with('alert-type','success');
     }
-
     
 }

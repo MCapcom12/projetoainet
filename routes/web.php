@@ -56,10 +56,12 @@ Route::get('users/changeType','UserController@adminChangeType')->name('changeTyp
 Route::get('users/changeBlock','UserController@adminChangeBlock')->name('changeBlock');
 
 //Movimentos
-Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
+//Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
 Route::get('contas/{conta}/movimentos/create', 'MovimentoController@create')->name('movimentos.create');
 Route::post('contas/{conta}/movimentos/create', 'MovimentoController@store')->name('movimentos.store');
-//Route::get('contas/{conta}/movimentos/{movimento}/edit');
+Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit')->name('movimentos.edit');
+Route::put('contas/{conta}/detalhe','MovimentoController@update')->name('movimentos.update');
+//Route::get('categorias', 'MovimentoController@all_categorias')->name('categorias');
 //Route::get('contas/{conta}/movimentos/{movimento}');
 //Route::get('movimentos/{movimento}/edit');
 //Route::get('movimentos/{movimento}');
