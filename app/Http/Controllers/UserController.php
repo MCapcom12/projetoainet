@@ -11,18 +11,19 @@ class UserController extends Controller
 {
     public function index(){
         $id = Auth::user();
-        $users = DB::table('users')->paginate(15);
+        $users = User::paginate(15);
         if($id->adm == 1){
         	return view('users.index_adm')->withUsers($users);
         }else{
         	return view('users.index')->withUsers($users);
-        }  
+        }
     }
 
     public function search(Request $request){
         $id = Auth::user();
         $search = $request->get('search');
-        $users = DB::table('users')->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')->paginate(15);
+        $users = User::where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')->paginate(15);
+
         if($id->adm == 1){
             return view('users.index_adm', ['users' => $users]);
         }else{
@@ -30,27 +31,37 @@ class UserController extends Controller
         }
     }
 
-    public function adminChangeType(User $id){
-        dd($id->name);
-        if(Auth::user()==$id){
-            //erro
+    public function adminChangeType(User $user){
+        if(Auth::user()==$user){
+            return redirect()->back()->with('alert', 'O utilizador não pode alterar o tipo de conta do próprio utilizador!');
         }else{
-            if($id->adm == 1){
-                //$id->adm = $noadm;
-                dd('sucesso');
+            if($user->adm == 1){
+                $user->adm = 0;
             }else{
-                //$id->adm = $adm;
-                dd('insucesso');
+                $user->adm = 1;
         }
         
-        $id->save();
+        $user->save();
         
         }
 
         return redirect()->back();
     }
 
-    public function adminChangeBlock(Request $request){
+    public function adminChangeBlock(User $user){
+        if(Auth::user()==$user){
+            return redirect()->back()->with('alert', 'O utilizador não pode bloquear/desbloquear o próprio utilizador!');
+        }else{
+            if($user->bloqueado == 1){
+                $user->bloqueado = 0;
+            }else{
+                $user->bloqueado = 1;
+        }
+        
+        $user->save();
+        
+        }
+
         return redirect()->back();
     }
 }

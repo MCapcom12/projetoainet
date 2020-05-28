@@ -52,8 +52,8 @@ Route::post('contas/{id}/forceDelete','ContaController@forceDelete')->name('cont
 //users
 Route::get('users','UserController@index')->name('users')->middleware('auth');
 Route::get('/search', 'UserController@search');
-Route::get('users/changeType','UserController@adminChangeType')->name('changeType');
-Route::get('users/changeBlock','UserController@adminChangeBlock')->name('changeBlock');
+Route::get('users/{user}/changeType','UserController@adminChangeType')->name('changeType');
+Route::get('users/{user}/changeBlock','UserController@adminChangeBlock')->name('changeBlock');
 
 //Movimentos
 Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');

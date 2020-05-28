@@ -117,27 +117,21 @@ class ProfilesController extends Controller
             'passwordDelete' => 'required',
         ]);
 
-        if (Hash::check($request->passwordDelete, $id->password)) {
-            //$user = User::where('id', '3')->first();
-            //dd($id->autorizacoes_contas);
-            //DB::table('movimentos')->where('id_user', '>', 100)->dd();
-            
-            /*
-            //delete dos movimentos das contas do user
-            $id->movimentos()->forceDelete();
-            
-            dd($id->id);
-
+        if (Hash::check($request->passwordDelete, $id->password)) {       
             //delete auth
-            $id->autorizacoes_contas()->delete();
+            $id->autorizacoes_contas()->detach();
 
+            foreach ($id->contas()->withTrashed()->get() as $conta) {
+                $conta->movimentos()->withTrashed()->forceDelete();
+                $conta->utilizadores_autorizados()->detach();
+            }
             //delete das contas
-            $id->contas()->forceDelete();
+            $id->contas()->withTrashed()->forceDelete();
 
             //delete do user
             $id->delete();
             //User::destroy($id->id); 
-            */
+            
             
             return redirect('/');
         }
