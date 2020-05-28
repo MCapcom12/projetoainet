@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Conta;
 use App\User; 
 use App\Movimento; 
+use App\Categoria;
 use App\Http\Requests\ContaPost;
 
 
@@ -34,6 +35,7 @@ class ContaController extends Controller
     public function detalhe(Conta $conta){ 
 
         $movs=$conta->movimentos()->paginate(10);
+        
 
         return view('contas.detalhe')
         ->withConta($conta)

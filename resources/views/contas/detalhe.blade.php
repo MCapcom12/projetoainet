@@ -63,7 +63,6 @@
         <tbody>
         
         @foreach($movimentos as $mov)
-        
             <tr>  
                 <td>{{$mov->data}}</td>         
                 <td> {{$mov->valor}}</td>
@@ -71,7 +70,7 @@
                 <td> {{$mov->saldo_final}}</td>
                 <td> {{$mov->categoria_id}}</td>
                 <td> {{$mov->tipo}}</td>
-                <td><a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
+                <td><a href="{{route('movimentos.edit', ['movimento'=>$mov->id])}} " class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
                 <td>
                     <a href="#" class= "btn btn-danger btn-sm">Apagar(Ainda por fazer)</a> 
                 </td>

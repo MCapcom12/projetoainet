@@ -27,7 +27,9 @@ class MovimentoPost extends FormRequest
         return [
             'data' => 'required|date_format:Y/m/d',
             'valor' => 'required|integer|gt:0',
-            'tipo' => 'required|string|in:D,R'
+            'tipo' => 'required|string|in:D,R',
+            'categoria_id' => 'nullable',
+            'descricao'=>'nullable|string'
         ];
     }
 
