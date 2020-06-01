@@ -128,6 +128,8 @@ class ProfilesController extends Controller
             //delete das contas
             $id->contas()->withTrashed()->forceDelete();
 
+            //delete de foto de user
+            Storage::delete('fotos' . '/' . $id->foto);
             //delete do user
             $id->delete();
             //User::destroy($id->id); 

@@ -2,25 +2,11 @@
 @section('title','Conta')
 
 @section('content')
-
     <div class= "row mb-3">
         <div class="col-3">
             <a href="{{route('contas.edit',['conta'=>$conta])}}" class="btn btn-primary" role="button" aria-pressed="true">Editar</a>
         </div>
-
-        <div class="col-3">
-            <a href="{{route('contas.auth',['conta'=>$conta])}}" class="btn btn-primary" role="button" aria-pressed="true">Autorizações</a>
-        </div>
-
-        <div class ="col-3" >
-            <form action="{{route('contas.destroy', ['conta' => $conta])}}" method="POST">
-                @csrf
-                @method("DELETE")
-                <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
-            </form>
-        </div>
     </div>
-  
 
     <table class= "table">
         <thead>
@@ -89,7 +75,7 @@
    <div class="row mr-3">
    {{$movimentos->withQueryString()->links()}}
         <div class="ml-auto" >
-            <a href="{{route('contas')}}" class="btn btn-primary" role="button" aria-pressed="true">Voltar Atrás</a>
+            <a href="{{route('contasPartilhadas')}}" class="btn btn-primary" role="button" aria-pressed="true">Voltar Atrás</a>
         </div>
    </div>
     

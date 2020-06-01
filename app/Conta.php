@@ -19,7 +19,12 @@ class Conta extends Model
         return $this->hasMany('App\Movimento');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function utilizadores_autorizados(){
-        return $this->belongsToMany('App\User','autorizacoes_contas');
+        return $this->belongsToMany('App\User','autorizacoes_contas')->withPivot('so_leitura');
     }
 }

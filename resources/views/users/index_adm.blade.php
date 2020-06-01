@@ -17,19 +17,10 @@
                     <div class="input-group">
                         <input type="search" name="search" class="form-control">
                         <span class="input-group-prepend">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                            
+                            <button type="submit" class="btn btn-primary">Search</button>             
                         </span>
-                            <div>
-                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Admin</a>
-                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Regular</a>
-                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Blocked</a>
-                                &nbsp;<a href="#" class="btn btn-primary btn-sm" role="button" aria-pressed="true" >Not Blocked</a>
-                            </div>
-
                     </div>
                 </form>
-
             </div>
             <th>Foto</th>
             <th>Nome</th>
@@ -38,7 +29,7 @@
             <th></th>
             <th>Block</th>
             <th></th>
-            <th></th>
+            <th>Autorizações de conta</th>
             <th></th>
             <th></th> 
             <th></th> 
@@ -70,6 +61,7 @@
             ?> 
             </td>
             <td><a href="{{route('changeBlock', $id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Bloquear/Desbloquear</a></td>
+            <td><a href="{{route('authConta', $id)}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Autorizações</a></td>
         </tr>
     @endforeach
     </tbody>
