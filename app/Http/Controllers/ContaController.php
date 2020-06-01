@@ -219,6 +219,12 @@ class ContaController extends Controller
 
     public function addUser(Request $request, Conta $conta){
         $search = $request->get('search');
+        $mail = $conta->utilizadores_autorizados()->where('email', '=', $search)->first();
+        if($mail){
+            return redirect()->back()
+                    ->with('alert-msg', 'Utilizador com email especificado já se encontra com autorizações!')
+                    ->with('alert-type','danger');
+        }
 
         //Validar o email (Ver se ele está registado)
         if(User::where('email', '=', $search)->exists()){
@@ -229,7 +235,9 @@ class ContaController extends Controller
                 ->with('alert-msg', 'Utilizador com email especificado não se encontra verificado!')
                 ->with('alert-type','danger');
             }else{
-                dd('cria auth');
+                $id = $conta->utilizadores_autorizados();
+                $id->attach($user->id, ['so_leitura' => 1]);
+                return redirect()->back();
             }
             
         }else{
@@ -240,8 +248,10 @@ class ContaController extends Controller
     }
 
     public function removeUser(Conta $conta, User $id){
-        echo($conta->nome);
-        dd($id->name);
+        $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
+        $user->detach($id->id);
+
+        return redirect()->back();
     }
 
     public function contasPartilhadas(Request $request){
@@ -254,18 +264,13 @@ class ContaController extends Controller
     }
 
     public function changeAuth(Conta $conta, User $id){ 
-        $users = $conta->utilizadores_autorizados;
-        foreach ($users as $utilizadores_autorizados) {
-            if($id->id==$utilizadores_autorizados->id){
-
-                if($utilizadores_autorizados->pivot->so_leitura){
-                    $utilizadores_autorizados->pivot_so_leitura = 0;
+        $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
+       //dd($users);
+                if($user->first()->pivot->so_leitura){
+                    $user->updateExistingPivot($id,['so_leitura'=> 0]);
                 }else{
-                    $utilizadores_autorizados->pivot_so_leitura = 1;
+                    $user->updateExistingPivot($id,['so_leitura'=> 1]);
                 }
-            }
-        }
-        $id->save();
         return redirect()->back();
     }
 }
