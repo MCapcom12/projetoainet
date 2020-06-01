@@ -201,6 +201,7 @@ pre {
   overflow: auto;
 }
 
+
 figure {
   margin: 0 0 1rem;
 }
@@ -11000,3 +11001,5 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+

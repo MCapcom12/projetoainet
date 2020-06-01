@@ -145,7 +145,7 @@ class EstatisticaController extends Controller
 
 
         
-        return view('estatisticas.index',compact('totalSaldo','totalValoresTempo','graphCat'));
+        return view('estatisticas.index',compact('totalSaldo','totalValoresTempo'));
     }
 
 
