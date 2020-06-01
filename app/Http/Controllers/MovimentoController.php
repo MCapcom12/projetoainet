@@ -64,7 +64,7 @@ class MovimentoController extends Controller
 
     public function store(MovimentoPost $request, Conta $conta){
 
-        dd($conta->movimentos()->get('data'));
+        //dd($conta->movimentos()->get('data'));
         $validated_data = $request->validated();
         if($validated_data["categoria_id"]>0 && $validated_data["categoria_id"] <= 12 && $validated_data["tipo"] == 'D'){
             return redirect()->back()->with('alert-msg','Movimento não criado. Tipo e Categoria do Movimento não coincidem!')
@@ -103,7 +103,8 @@ class MovimentoController extends Controller
         //dd($conta->saldo_atual);
         
         //dd($validated_data);
-        Movimento::create($validated_data);
+        $movimento = Movimento::create($validated_data);
+        $this->calcularSaldos($conta, $movimento);
         $conta->save();
         //$this->calcularSaldos($movimento->contas, $movimento);
         
@@ -126,7 +127,7 @@ class MovimentoController extends Controller
         $validated_data =$request -> validated();
         //$validated_data["conta_id"]=$movimento->id;
         //dd($movimento->saldo_final);
-        $validated_data['saldo_inicial']=$movimento->saldo_final;
+        $validated_data['saldo_inicial']=$movimento->saldo_inicial;
         //dd($validated_data['saldo_inicial']);
         if($validated_data["tipo"]=='D'){
             $validated_data["saldo_final"]= $validated_data["saldo_inicial"]-$validated_data['valor'];
@@ -151,11 +152,12 @@ class MovimentoController extends Controller
 
         //$this->calcularSaldos($movimento->contas, $movimento);
         //$conta->saldo_atual=$validated_data["saldo_final"];
-
+        
         //dd($movimento->contas);
         $movimento->fill($validated_data);
+        //$this->calcularSaldos($movimento->contas, $movimento);
         $movimento->save();
-        
+        $this->calcularSaldos($movimento->contas, $movimento);
 
         
         return redirect()->route('contas.detalhe', $movimento->conta_id)
@@ -167,25 +169,106 @@ class MovimentoController extends Controller
     
     private function calcularSaldos(Conta $conta, Movimento $movimento){
         //$ultimoMovimentoValido=Movimento::where conta_id = x , data < $movimento->data 
-        // $ultimoMovimentoValido=Movimento::where('conta_id', '=', $conta->id)
-        //                                  ->where('data', '<', $movimento->data)
-        //                                  ->orderBy('data','desc')
-        //                                  ->orderBy('id','desc');
+        $ultimoMovimentoValidoDatasDiferentes=Movimento::where('conta_id', '=', $conta->id)
+                                          ->where('data', '<', $movimento->data);
+                                          //->get();
+                                          //->where('id','<', $movimento->id)
+                                          //->orderBy('data','desc')
+                                          //->orderBy('id','desc');
+
+        $ultimoMovimentoValidoDatasIguais=Movimento::where('conta_id', '=', $conta->id)
+                                                    ->where('data', '=', $movimento->data)
+                                                    ->where('id','<', $movimento->id);
+                                                    //->get();
+                                                    //->orderBy('data','desc')
+                                                    //->orderBy('id','desc');
+
+        $resultado=$ultimoMovimentoValidoDatasDiferentes->union($ultimoMovimentoValidoDatasIguais);
+        $resultado->orderBy('data','desc')
+                  ->orderBy('id','desc');
+        
+        $ultimoMovimentoValido=$resultado->first();
         //dd($ultimoMovimentoValido);
         
-        
+                  //dd($ultimoMovimentoValido);
+        //dd($ultimoMovimentoValido->saldo_final);
+        if($ultimoMovimentoValido){
+            $movimento->saldo_inicial=$ultimoMovimentoValido->saldo_final;
+            //dd($movimento->saldo_inicial);
+            if($movimento->tipo == 'D'){
+                $movimento->saldo_final = $movimento->saldo_inicial - $movimento->valor;
+            }else{
+                $movimento->saldo_final = $movimento->saldo_inicial + $movimento->valor;
+            }
+
+            
+            $movimento->save();
+            //$conta->saldo_atual=$movimento->saldo_final;
+
+        }   
+        //dd($movimento);
+        //dd($movimento->saldo_final);
         //$conta->first();
         //$ultimoMovimentoValido->first();        
         //Order By data, desc
         //Order by id, desc 
         //->First() -> valor inicial da conta, caso seja null vou buscar à conta
      
-        // foreach($conta->movimentos() as $mov){
-        //     if($mov->get('data')>=$movimento->data){
+        $movimentosParaAlterarDatasDiferentes = Movimento::where('conta_id', '=', $conta->id)
+                                            ->where('data', '>', $movimento->data);
+                                            //->where('id','>', $movimento->id)
+                                            //->orderBy('data','asc')
+                                            //->orderBy('id','asc')
+                                            //->get();
 
-        //     }
-        // }
+        $movimentosParaAlterarDatasIguais = Movimento::where('conta_id', '=', $conta->id)
+                                            ->where('data', '=', $movimento->data)
+                                            ->where('id','>', $movimento->id);
+                                            //->orderBy('data','asc')
+                                            //->orderBy('id','asc')
+                                            //->get();
 
+        $resultadoParaAlterar=$movimentosParaAlterarDatasDiferentes->union($movimentosParaAlterarDatasIguais);
+        $resultadoParaAlterar->orderBy('data','asc')
+                    ->orderBy('id','asc');
+        
+        $movimentosParaAlterar=$resultadoParaAlterar->get();
+        
+        //dd($movimentosParaAlterar);
+
+
+        for ($i=0; $i < sizeof($movimentosParaAlterar); $i++) { 
+            # code...
+            $mov=$movimentosParaAlterar[$i];
+            //dd($mov);
+            if($i==0){
+                $mov->saldo_inicial=$movimento->saldo_final;
+                //dd($mov->saldo_inicial);
+                if($mov->tipo == 'D'){
+                    $mov->saldo_final = $mov->saldo_inicial - $mov->valor;
+                    
+                }else{
+                    $mov->saldo_final = $mov->saldo_inicial + $mov->valor;
+                }
+
+            }else{
+                $mov->saldo_inicial=$movimentosParaAlterar[$i-1]->saldo_final;
+                //dd($mov->saldo_inicial); 
+                if($mov->tipo == 'D'){
+                    $mov->saldo_final = $mov->saldo_inicial - $mov->valor;
+                }else{
+                    $mov->saldo_final = $mov->saldo_inicial + $mov->valor;
+                } 
+
+            }
+            
+            $conta->saldo_atual=$mov->saldo_final;
+            $conta->save();
+
+            $mov->save();
+        }
+        
+        
 
         //$movimentosParaAlterar = Movimento::where conta_id=x , data > $movimento-> data
         //Order By data, asc
@@ -201,20 +284,29 @@ class MovimentoController extends Controller
         
         //dd($conta);
         $oldId = $movimento->id;
-
+        $movimentoAnterior = $this->getLastMovimento($movimento, $movimento->contas); 
+        // if(!$movimentoAnterior){
+        //     $movimentoASeguir = $this->getNextMovimento($movimento, $movimento->contas);
+        //     //buscar o a seguir
+        //     //alterar o a seguir->saldo_inicial para igual ao que vou apagar -> saldo _inicial
+        // }
+        
+        
         try {
+            //$conta=$movimento->contas->where('conta_id', $movimento->id);
             
             $conta=$movimento->contas;
-            $saldo= $conta->saldo_atual;
-            //dd($saldo);
-            if($movimento->tipo=='R'){
-                $conta->saldo_atual = $saldo - $movimento->valor;
-                //dd($conta->saldo_atual);
-            }else{
-                //dd($conta->saldo_atual);
-                $conta->saldo_atual = $saldo + $movimento->valor;
-                //dd($conta->saldo_atual);
-            }
+            
+             $saldo= $conta->saldo_atual;
+             //dd($saldo);
+             if($movimento->tipo=='R'){
+                 $conta->saldo_atual = $saldo - $movimento->valor;
+                 //dd($conta->saldo_atual);
+             }else{
+                 //dd($conta->saldo_atual);
+                 $conta->saldo_atual = $saldo + $movimento->valor;
+                 //dd($conta->saldo_atual);
+             }
 
             if($movimento->imagem_doc){
                 $fotoDelete = $movimento->imagem_doc;
@@ -224,20 +316,24 @@ class MovimentoController extends Controller
             $movimento->forceDelete();
             Movimento::destroy($oldId);
 
+            
             $conta->save();
 
-            return redirect()->route('contas.detalhe', $movimento->conta_id)
+            $this->calcularSaldosOnDelete($movimentoAnterior, $movimentoAnterior->contas);
+            
+
+            return redirect()->back()
             ->with('alert-msg', 'Movimento "'.$movimento->id.'"foi apagado com sucesso')
             ->with('alert-type','success');
 
         } catch (\Throwable $th) {
             //throw $th;
             if ($th->errorInfo[1]=1451) {
-                return redirect()->route('contas.detalhe', $movimento->conta_id)
+                return redirect()->back()//route('contas.detalhe', $movimento->conta_id)
                 ->with('alert-msg', 'Não foi possível apagar o movimento "' . $oldId . '", porque este movimento já está em uso!')
                     ->with('alert-type', 'danger');
             }else{
-                return redirect()->route('contas.detalhe', $movimento->conta_id)
+                return redirect()->back()//route('contas.detalhe', $movimento->conta_id)
                     ->with('alert-msg', 'Não foi possível apagar o movimento "' . $oldId . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }
@@ -245,4 +341,115 @@ class MovimentoController extends Controller
     }
 
     
+    private function getLastMovimento(Movimento $movimento, Conta $conta){
+        $ultimoMovimentoValidoDatasDiferentes=Movimento::where('conta_id', '=', $conta->id)
+                                          ->where('data', '<', $movimento->data);
+                                          //->get();
+                                          //->where('id','<', $movimento->id)
+                                          //->orderBy('data','desc')
+                                          //->orderBy('id','desc');
+
+        $ultimoMovimentoValidoDatasIguais=Movimento::where('conta_id', '=', $conta->id)
+                                                    ->where('data', '=', $movimento->data)
+                                                    ->where('id','<', $movimento->id);
+                                                    //->get();
+                                                    //->orderBy('data','desc')
+                                                    //->orderBy('id','desc');
+
+        $resultado=$ultimoMovimentoValidoDatasDiferentes->union($ultimoMovimentoValidoDatasIguais);
+        $resultado->orderBy('data','desc')
+                  ->orderBy('id','desc');
+        $resultadoFinal=$resultado->first();
+
+        return $resultadoFinal;     
+    }
+
+    private function getNextMovimento(Movimento $movimento, Conta $conta){
+        $movimentosParaAlterarDatasDiferentes = Movimento::where('conta_id', '=', $conta->id)
+                                            ->where('data', '>', $movimento->data);
+                                            //->where('id','>', $movimento->id)
+                                            //->orderBy('data','asc')
+                                            //->orderBy('id','asc')
+                                            //->get();
+
+        $movimentosParaAlterarDatasIguais = Movimento::where('conta_id', '=', $conta->id)
+                                            ->where('data', '=', $movimento->data)
+                                            ->where('id','>', $movimento->id);
+                                            //->orderBy('data','asc')
+                                            //->orderBy('id','asc')
+                                            //->get();
+
+        $resultadoParaAlterar=$movimentosParaAlterarDatasDiferentes->union($movimentosParaAlterarDatasIguais);
+        $resultadoParaAlterar->orderBy('data','asc')
+                    ->orderBy('id','asc');
+        
+        $movimentosParaAlterar=$resultadoParaAlterar->first();
+
+        return $movimentosParaAlterar;
+    }
+
+    private function calcularSaldosOnDelete(Movimento $movimento, Conta $conta){
+        
+        //$movimento=getLastMovimento($movimento);
+     
+        $movimentosParaAlterarDatasDiferentes = Movimento::where('conta_id', '=', $conta->id)
+                                            ->where('data', '>', $movimento->data);
+                                            //->where('id','>', $movimento->id)
+                                            //->orderBy('data','asc')
+                                            //->orderBy('id','asc')
+                                            //->get();
+
+        $movimentosParaAlterarDatasIguais = Movimento::where('conta_id', '=', $conta->id)
+                                            ->where('data', '=', $movimento->data)
+                                            ->where('id','>', $movimento->id);
+                                            //->orderBy('data','asc')
+                                            //->orderBy('id','asc')
+                                            //->get();
+
+        $resultadoParaAlterar=$movimentosParaAlterarDatasDiferentes->union($movimentosParaAlterarDatasIguais);
+        $resultadoParaAlterar->orderBy('data','asc')
+                    ->orderBy('id','asc');
+        
+        $movimentosParaAlterar=$resultadoParaAlterar->get();
+        
+
+        //dd($movimentosParaAlterar);
+        if(sizeof($movimentosParaAlterar)==0){
+            $conta->saldo_atual=$movimento->saldo_final;
+            $conta->save();
+        }
+
+        for ($i=0; $i < sizeof($movimentosParaAlterar); $i++) { 
+            # code...
+            $mov=$movimentosParaAlterar[$i];
+            //dd($mov);
+            if($i==0){
+                $mov->saldo_inicial=$movimento->saldo_final;
+                //dd($mov->saldo_inicial);
+                if($mov->tipo == 'D'){
+                    $mov->saldo_final = $mov->saldo_inicial - $mov->valor;
+                    
+                }else{
+                    $mov->saldo_final = $mov->saldo_inicial + $mov->valor;
+                }
+
+            }else{
+                $mov->saldo_inicial=$movimentosParaAlterar[$i-1]->saldo_final;
+                //dd($mov->saldo_inicial); 
+                if($mov->tipo == 'D'){
+                    $mov->saldo_final = $mov->saldo_inicial - $mov->valor;
+                }else{
+                    $mov->saldo_final = $mov->saldo_inicial + $mov->valor;
+                } 
+
+            }
+            
+            $conta->saldo_atual=$mov->saldo_final;
+            $conta->save();
+
+            $mov->save();
+        }
+    
+    }   
+
 }

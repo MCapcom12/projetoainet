@@ -99,7 +99,12 @@
                 <td> {{$mov->saldo_inicial}}</td>
                 <td> {{$mov->saldo_final}}</td>
                 <td> {{$mov->categoria_id}}</td>
-                <td> {{$mov->tipo}}</td>
+                @if($mov->tipo=='D')
+                <td> Despesa </td> 
+                @else 
+                <td> Receita </td>
+                @endif
+               
                 @if($mov->imagem_doc)
                 <td> Sim </td> 
                 @else 
