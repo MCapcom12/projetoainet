@@ -25,8 +25,8 @@ class MovimentoPost extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required|date_format:Y/m/d',
-            'valor' => 'required|integer|gt:0',
+            'data' => 'required|date_format:Y-m-d',
+            'valor' => 'required|numeric|gt:0',
             'tipo' => 'required|string|in:D,R',
             'categoria_id' => 'nullable',
             'descricao'=>'nullable|string'
