@@ -6,7 +6,6 @@
 <table class = "table">
     <thead>
         <tr>
-        <th>ID</th>
             <th>nome</th>
             <th>saldo atual</th> 
             <th>Nome Dono</th>
@@ -19,8 +18,7 @@
     <tbody>
 
     @foreach($contas as $cont)
-        <tr>  
-        <td> {{$cont->id}}</td>      
+        <tr>       
             <td> {{$cont->nome}}</td>
             <td> {{$cont->saldo_atual}}</td>
             <td> {{$cont->user->name}}</td>

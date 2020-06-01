@@ -8,7 +8,7 @@
         <tr>
             <th>Conta</th>
             <th></th>
-            <th>Autorização Atual</th>
+            <th>Autorização Atual(1 - Read, 0 - Complete)</th>
             <th></th>
             <th>Autorização Leitura</th>
             <th>Autorização Acesso Completo</th> 
