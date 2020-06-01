@@ -35,8 +35,9 @@
         <option value="" {{'' == old('categoria_id', $movimento->categoria_id) ? 'selected' : ''}}>Sem Categoria</option>
 
         
-            @foreach ($categorias as $categ => $id)
-                <option value={{$categ+1}} {{$categ+1 == old('categoria_id', $movimento->categoria_id)  ? 'selected' : ''}}>{{$id->nome}} ({{$id->tipo}})</option>
+            @foreach ($categorias as $categ)
+                
+                <option value={{$categ->id}} {{$categ->id == old('categoria_id', $movimento->categoria_id)  ? 'selected' : ''}}>{{$categ->nome}} ({{$categ->tipo}})</option>
             @endforeach
         
     </select>
@@ -51,4 +52,15 @@
     @error('descricao')
         <div class="small text-danger">{{$message}}</div>
     @enderror
+</div>
+
+<div class="form-group ">
+    <label for="inputImagem_doc">Documento do Movimento</label>
+    <br>
+    <input id="imagem_doc" type="file" name="imagem_doc" accept=".jpeg,.jpg,.png">
+
+    @error('imagem_doc')
+        <div class="small text-danger">{{$message}}</div>
+    @enderror
+
 </div>
