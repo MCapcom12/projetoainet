@@ -142,17 +142,15 @@ class ContaController extends Controller
     }
 
     public function edit(Conta $conta){
-       
-        
+        $this->authorize('view', $conta);
         return view('contas.edit')->withConta($conta);
     }
 
     public function update(ContaPost $request, Conta $conta){
+        $this->authorize('view', $conta);
         $validated_data =$request -> validated();
         $conta->fill($validated_data);
         $conta->save();
-
-        
 
         return redirect()->route('contas.detalhe',['conta'=>$conta])
            
@@ -162,15 +160,12 @@ class ContaController extends Controller
 
     public function create(){
         $user= Auth::id();
-       $newConta= new Conta;
+        $newConta= new Conta;
         return view('contas.create')->withUser($user)
         ->withConta($newConta);
     }
 
     public function store(ContaPost $request){
-        
-       
-        
         $validated_data = $request->validated();
         $validated_data['user_id'] = Auth::id();
         $validated_data['saldo_atual'] = $validated_data['saldo_abertura'];
@@ -182,6 +177,7 @@ class ContaController extends Controller
     }
 
     public function destroy(Conta $conta){
+        $this->authorize('view', $conta);
         $oldName = $conta->nome;
         try {
             $conta->delete();
@@ -239,6 +235,7 @@ class ContaController extends Controller
 
     //Funcao para mostrar a lista de utilizadores com autorizacoes de uma conta especifica
     public function auth(Conta $conta){
+        $this->authorize('view', $conta);
         $users = $conta->utilizadores_autorizados;
         foreach ($users as $utilizadores_autorizados) {
             $utilizadores_autorizados->pivot->so_leitura;
@@ -250,6 +247,7 @@ class ContaController extends Controller
 
     //Funcao para adicionar um user a partir de um email especifico e valido, ser se valido = existir e ser verificado
     public function addUser(Request $request, Conta $conta){
+        $this->authorize('view', $conta);
         $search = $request->get('search');
         $mail = $conta->utilizadores_autorizados()->where('email', '=', $search)->first();
         //verificar se o mail indicado já está na lista de autorizacoes
@@ -292,6 +290,7 @@ class ContaController extends Controller
 
     //Funcao para remover qualquer autorização
     public function removeUser(Conta $conta, User $id){
+        $this->authorize('view', $conta);
         $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
         $user->detach($id->id);
 
@@ -310,6 +309,7 @@ class ContaController extends Controller
 
     //Funcao para mudar o tipo da autorizacao para read ou acesso completo. Dependendo da autorização da conta 
     public function changeAuth(Conta $conta, User $id){ 
+        $this->authorize('view', $conta);
         $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
                 if($user->first()->pivot->so_leitura){
                     $user->updateExistingPivot($id,['so_leitura'=> 0]);

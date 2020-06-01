@@ -115,7 +115,6 @@ class MovimentoController extends Controller
 
 
     public function edit(Movimento $movimento){
-        //dd($movimento->id);
         $categorias=Categoria::all();
         return view('movimentos.edit')->withCategorias($categorias)                                 
                                       ->withMovimento($movimento);

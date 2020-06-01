@@ -3,6 +3,8 @@
 
 @section('content')
 
+    @can('view', $conta)
+
     <div class= "row mb-3">
         <div class="col-3">
             <a href="{{route('contas.edit',['conta'=>$conta])}}" class="btn btn-primary" role="button" aria-pressed="true">Editar</a>
@@ -127,10 +129,9 @@
             <a href="{{route('contas')}}" class="btn btn-primary" role="button" aria-pressed="true">Voltar Atrás</a>
         </div>
    </div>
-    
    
 
-
+@endcan
 @endsection
 
 
