@@ -25,9 +25,9 @@
             <th>Foto</th>
             <th>Nome</th>
             <th>Email</th>
-            <th>Tipo</th>
+            <th>Tipo de Conta</th>
             <th></th>
-            <th>Block</th>
+            <th>Estado de Conta</th>
             <th></th>
             <th>Autorizações de conta</th>
             <th></th>
@@ -54,9 +54,9 @@
             <td>
             <?php
             if ($id->bloqueado){
-                echo "Blocked";
+                echo "Bloqueado";
             }else{
-                echo "Not Blocked";
+                echo "Desbloqueado";
             }
             ?> 
             </td>

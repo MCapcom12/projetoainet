@@ -269,6 +269,10 @@
     {!! $totalValoresTempo->script() !!}
   @endif  
 
+  @if($graphCat ?? '')
+    {!! $graphCat->script() !!}
+  @endif 
+
 
 </body>
 

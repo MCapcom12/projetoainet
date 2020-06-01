@@ -26,49 +26,6 @@ class ProfilesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -80,9 +37,9 @@ class ProfilesController extends Controller
         $this->validate($request, [
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
-            'nif' => ['nullable','int', 'digits_between:0,9'],
+            'nif' => ['nullable','required', 'unique:users','int', 'digits_between:0,9'],
             'telefone' => ['nullable','string', 'regex:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0-9]*$/i'],
-            'foto' => ['max:10000', 'mimes:jpeg,png,jpg'],
+            'foto' => ['max:10000'],
 
         ]);
 
@@ -131,13 +88,14 @@ class ProfilesController extends Controller
 
             //delete de foto de user
             Storage::delete('fotos' . '/' . $id->foto);
+
             //delete do user
             $id->delete();
-            //User::destroy($id->id); 
-            
             
             return redirect('/');
         }
-            //error message
+            return redirect()->back()
+                    ->with('alert-msg', 'Password Errada!')
+                    ->with('alert-type', 'danger');
     }
 }

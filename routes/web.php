@@ -21,16 +21,18 @@ use Illuminate\Support\Facades\Route;
 // dashboard
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Auth::routes(['verify' => true]);
+
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware'=>'auth'],function(){
+    
 Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
 //conta
 Route::get('contas','ContaController@admin')->name('contas')->middleware('auth');
 
@@ -62,7 +64,11 @@ Route::get('/search', 'UserController@search');
 Route::get('users/{user}/changeType','UserController@adminChangeType')->name('changeType');
 Route::get('users/{user}/changeBlock','UserController@adminChangeBlock')->name('changeBlock');
 Route::get('users/{user}/auth','UserController@authConta')->name('authConta');
-Route::get('users/{user}/authUser/{conta}','UserController@authUser')->name('authUser');
+Route::get('users/{user}/authUserRead/{conta}','UserController@authUserRead')->name('authUserRead');
+Route::get('users/{user}/authUserComplete/{conta}','UserController@authUserComplete')->name('authUserComplete');
+Route::get('users/{user}/authUserRemove/{conta}','UserController@authUserRemove')->name('authUserRemove');
+
+
 
 
 //Movimentos
@@ -90,3 +96,5 @@ Route::post('Perfil/Delete', 'ProfilesController@deleteUser')->name('deleteUser'
 
 Route::get('Estatisticas','EstatisticaController@index')->name('estatistica')->middleware('auth');
 //Route::get('Estatisticas','EstatisticaController@totalSaldo')->name('totalSaldo');
+});
+

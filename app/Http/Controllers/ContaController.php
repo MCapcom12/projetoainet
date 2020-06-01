@@ -200,7 +200,7 @@ class ContaController extends Controller
                     ->with('alert-type', 'danger');
             }else{
                 return redirect()->route('contas')
-                    ->with('alert-msg', 'Não foi possível apagar a Conta "' . $oldName . '". Erro: ' . $th->errorInfo[2])
+                    ->with('alert-msg', 'Não foi possível apagar a Conta' . $oldName . '". Erro: ' . $th->errorInfo[2])
                     ->with('alert-type', 'danger');
             }
         }
@@ -240,6 +240,7 @@ class ContaController extends Controller
             ->with('alert-type','success');
     }
 
+    //Funcao para mostrar a lista de utilizadores com autorizacoes de uma conta especifica
     public function auth(Conta $conta){
         $users = $conta->utilizadores_autorizados;
         foreach ($users as $utilizadores_autorizados) {
@@ -250,9 +251,11 @@ class ContaController extends Controller
             ->withConta($conta);
     }
 
+    //Funcao para adicionar um user a partir de um email especifico e valido, ser se valido = existir e ser verificado
     public function addUser(Request $request, Conta $conta){
         $search = $request->get('search');
         $mail = $conta->utilizadores_autorizados()->where('email', '=', $search)->first();
+        //verificar se o mail indicado já está na lista de autorizacoes
         if($mail){
             return redirect()->back()
                     ->with('alert-msg', 'Utilizador com email especificado já se encontra com autorizações!')
@@ -265,12 +268,22 @@ class ContaController extends Controller
             //validar se o mail está verificado
             if($user->email_verified_at == null){
                 return redirect()->back()
-                ->with('alert-msg', 'Utilizador com email especificado não se encontra verificado!')
-                ->with('alert-type','danger');
+                    ->with('alert-msg', 'Utilizador com email especificado não se encontra verificado!')
+                    ->with('alert-type','danger');
             }else{
-                $id = $conta->utilizadores_autorizados();
-                $id->attach($user->id, ['so_leitura' => 1]);
-                return redirect()->back();
+                //verificar se o está adicionar a si mesmo a lista de autorizacoes
+                $utilizador = Auth::user();
+                if($utilizador->email == $search){
+                    return redirect()->back()
+                        ->with('alert-msg', 'Não pode adicionar o dono da conta ás autorizações!')
+                        ->with('alert-type','danger');
+                }else{
+                    $id = $conta->utilizadores_autorizados();
+                    $id->attach($user->id, ['so_leitura' => 1]);
+                    return redirect()->back()
+                        ->with('alert-msg', 'Autorização criada com sucesso!')
+                        ->with('alert-type','success');;
+                }
             }
             
         }else{
@@ -280,6 +293,7 @@ class ContaController extends Controller
         }
     }
 
+    //Funcao para remover qualquer autorização
     public function removeUser(Conta $conta, User $id){
         $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
         $user->detach($id->id);
@@ -287,6 +301,7 @@ class ContaController extends Controller
         return redirect()->back();
     }
 
+    //Funcao para mostrar as contas partilhadas e suas informacoes
     public function contasPartilhadas(Request $request){
         $user= $request->user();
 
@@ -296,14 +311,16 @@ class ContaController extends Controller
             ->withContas($contas);
     }
 
+    //Funcao para mudar o tipo da autorizacao para read ou acesso completo. Dependendo da autorização da conta 
     public function changeAuth(Conta $conta, User $id){ 
         $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
-       //dd($users);
                 if($user->first()->pivot->so_leitura){
                     $user->updateExistingPivot($id,['so_leitura'=> 0]);
                 }else{
                     $user->updateExistingPivot($id,['so_leitura'=> 1]);
                 }
-        return redirect()->back();
+        return redirect()->back()
+                ->with('alert-msg', 'Autorizações alteradas com sucesso!')
+                ->with('alert-type','success');
     }
 }
