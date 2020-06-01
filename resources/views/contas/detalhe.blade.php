@@ -49,6 +49,29 @@
         </div>
     </div>
 
+    <div class="col-9">
+        <form method="GET" action="{{route('contas.detalhe', $conta->id)}}" class="form-group">
+            <div class="input-group">
+            <input class="form-control" type="text" id="tipo" placeholder="Tipo" name="tipo" value="{{request("tipo")}}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+            </div>
+            </div>
+        </form>
+    </div>
+   
+
+    <div class="col-9">
+        <form method="GET" action="{{route('contas.detalhe', $conta->id)}}" class="form-group">
+        <div class="input-group">
+            <input class="form-control" type="text" id="categoria_id" placeholder="Categoria" name="categoria_id" value="{{request("categoria_id")}}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+            </div>
+            </div>
+        </form>
+    </div>
+
     <table class = "table">
         <thead>
             <tr>
@@ -57,7 +80,8 @@
                 <th>Saldo Inicial</th> 
                 <th>Saldo Final</th>
                 <th>Categoria do Movimento</th>
-                <th>Tipo do Movimento</th>  
+                <th>Tipo do Movimento</th>
+                <th>Imagem do Documento</th>  
             </tr>
         </thead>
         <tbody>
@@ -70,9 +94,20 @@
                 <td> {{$mov->saldo_final}}</td>
                 <td> {{$mov->categoria_id}}</td>
                 <td> {{$mov->tipo}}</td>
+                @if($mov->imagem_doc)
+                <td> Sim </td> 
+                @else 
+                <td> Não </td>
+                @endif 
+
                 <td><a href="{{route('movimentos.edit', ['movimento'=>$mov->id])}} " class="btn btn-primary btn-sm" role="button" aria-pressed ="true">Alterar </a></td>
                 <td>
-                    <a href="#" class= "btn btn-danger btn-sm">Apagar(Ainda por fazer)</a> 
+
+                <form action="{{route('movimentos.destroy', ['movimento' => $mov])}}" method="POST">
+                            @csrf
+                            @method("DELETE")
+                            <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+                        </form>
                 </td>
             </tr>
         @endforeach

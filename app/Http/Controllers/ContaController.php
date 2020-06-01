@@ -34,12 +34,42 @@ class ContaController extends Controller
 
     public function detalhe(Conta $conta){ 
 
-        $movs=$conta->movimentos()->paginate(10);
+        //$movs=$conta->movimentos()->paginate(10);
+        
+        //$tipo=$conta->movimentos()->get('tipo');
+
+        //$mov_tipo = $conta->movimentos()->where('tipo', 'D')->paginate(10);
+        $categorias=$conta->movimentos()->get('categoria_id');
+        //$categorias=Categoria::all()->toArray();
+        //dd($categorias);
+
+        if(request()->has('tipo') && request('tipo') != ''){
+            $movimentos= $conta->movimentos()->where('movimentos.tipo','=',request('tipo'));
+            //dd($movimentos);
+        }
+        elseif(request()->has('categoria_id') && request('categoria_id') != ''){
+            $movimentos= $conta->movimentos()->where('movimentos.categoria_id','=',request('categoria_id'));
+            //$movimentos=$conta->movimentos();
+        }else{
+            //$movimentos=$conta->movimentos();
+            $movimentos=Movimento::query()->where('conta_id',$conta->id)->orderBy('data','desc')->orderBy('id','desc');
+        }
+
         
 
+
+        $movimentos = $movimentos->paginate(10);
+        //dd($mov_tipo);
+
+        //$movs =$conta->movimentos()->where('tipo', $mov_tipo)->paginate(10);
+        
+        //dd($movs);
+
         return view('contas.detalhe')
+        ->withCategorias($categorias)
         ->withConta($conta)
-        ->withMovimentos($movs);
+        ->withMovimentos($movimentos);   
+        //->withSelectedTipo($tipo);
 
     }
 

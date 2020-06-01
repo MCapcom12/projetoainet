@@ -60,7 +60,8 @@ Route::get('users/{user}/changeBlock','UserController@adminChangeBlock')->name('
 Route::get('contas/{conta}/movimentos/create', 'MovimentoController@create')->name('movimentos.create');
 Route::post('contas/{conta}/movimentos/create', 'MovimentoController@store')->name('movimentos.store');
 Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit')->name('movimentos.edit');
-Route::put('contas/{conta}/detalhe','MovimentoController@update')->name('movimentos.update');
+Route::put('movimentos/{movimento}','MovimentoController@update')->name('movimentos.update');
+Route::delete('movimentos/{movimento}','MovimentoController@destroy')->name('movimentos.destroy');
 //Route::get('categorias', 'MovimentoController@all_categorias')->name('categorias');
 //Route::get('contas/{conta}/movimentos/{movimento}');
 //Route::get('movimentos/{movimento}/edit');
