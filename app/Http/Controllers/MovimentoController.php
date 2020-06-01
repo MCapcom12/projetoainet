@@ -64,7 +64,7 @@ class MovimentoController extends Controller
 
     public function store(MovimentoPost $request, Conta $conta){
 
-        
+        dd($conta->movimentos()->get('data'));
         $validated_data = $request->validated();
         if($validated_data["categoria_id"]>0 && $validated_data["categoria_id"] <= 12 && $validated_data["tipo"] == 'D'){
             return redirect()->back()->with('alert-msg','Movimento não criado. Tipo e Categoria do Movimento não coincidem!')
@@ -76,6 +76,8 @@ class MovimentoController extends Controller
                                      ->with('alert-type','danger');
         }
         
+        
+
         $validated_data["conta_id"]=$conta->id;
         $validated_data['saldo_inicial']=$conta->saldo_atual;
         
@@ -89,12 +91,12 @@ class MovimentoController extends Controller
         }
 
         //dd($conta->movimentos->get('id'));
-
-        $foto = $validated_data["valor"] . '_' . request()->file('imagem_doc')->getClientOriginalName();
-        request()->file('imagem_doc')->storeAs('docs', $foto, '');
-        $validated_data["imagem_doc"]=$foto;
-
-        //dd($validated_data["imagem_doc"]);
+        if(request()->hasFile('imagem_doc')){
+            $foto = $validated_data["valor"] . '_' . request()->file('imagem_doc')->getClientOriginalName();
+            request()->file('imagem_doc')->storeAs('docs', $foto, '');
+            $validated_data["imagem_doc"]=$foto;
+        }
+            //dd($validated_data["imagem_doc"]);
 
 
         $conta->saldo_atual=$validated_data["saldo_final"];
@@ -178,6 +180,13 @@ class MovimentoController extends Controller
         //Order By data, desc
         //Order by id, desc 
         //->First() -> valor inicial da conta, caso seja null vou buscar à conta
+     
+        // foreach($conta->movimentos() as $mov){
+        //     if($mov->get('data')>=$movimento->data){
+
+        //     }
+        // }
+
 
         //$movimentosParaAlterar = Movimento::where conta_id=x , data > $movimento-> data
         //Order By data, asc
