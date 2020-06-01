@@ -4,7 +4,7 @@ namespace App\Charts;
 
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 
-class UserChart extends Chart
+class EstatisticaChart extends Chart
 {
     /**
      * Initializes the chart.

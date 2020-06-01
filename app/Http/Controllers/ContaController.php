@@ -142,6 +142,7 @@ class ContaController extends Controller
     }
 
     public function edit(Conta $conta){
+       
         
         return view('contas.edit')->withConta($conta);
     }
