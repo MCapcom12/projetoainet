@@ -52,14 +52,18 @@ class ContaController extends Controller
         }
         if($userAuth){
             if($utilizadorLer){
-                $movs=$conta->movimentos()->paginate(10);
+                $movimentos=Movimento::query()->where('conta_id',$conta->id)->orderBy('data','desc')->orderBy('id','desc');
+                $movs=$movimentos->paginate(10);
+                //$movs=$conta->movimentos()->paginate(10);
         
                 return view('contas.partilhadasLer')
                     ->withConta($conta)
                     ->withMovimentos($movs);
 
             }else{
-                $movs=$conta->movimentos()->paginate(10);
+                $movimentos=Movimento::query()->where('conta_id',$conta->id)->orderBy('data','desc')->orderBy('id','desc');
+                $movs=$movimentos->paginate(10);
+                //$movs=$conta->movimentos()->paginate(10);
         
                 return view('contas.partilhadasCompleto')
                     ->withConta($conta)
@@ -76,11 +80,13 @@ class ContaController extends Controller
         //dd($categorias);
 
         if(request()->has('tipo') && request('tipo') != ''){
-            $movimentos= $conta->movimentos()->where('movimentos.tipo','=',request('tipo'));
+            $movimentos=Movimento::query()->where('conta_id',$conta->id)->where('movimentos.tipo','=',request('tipo'))->orderBy('data','desc')->orderBy('id','desc');
+            //$movimentos= $conta->movimentos()->where('movimentos.tipo','=',request('tipo'));
             //dd($movimentos);
         }
         elseif(request()->has('categoria_id') && request('categoria_id') != ''){
-            $movimentos= $conta->movimentos()->where('movimentos.categoria_id','=',request('categoria_id'));
+            $movimentos=Movimento::query()->where('conta_id',$conta->id)->where('movimentos.categoria_id','=',request('categoria_id'))->orderBy('data','desc')->orderBy('id','desc');
+            //$movimentos= $conta->movimentos()->where('movimentos.categoria_id','=',request('categoria_id'));
             //$movimentos=$conta->movimentos();
         }else{
             //$movimentos=$conta->movimentos();
@@ -104,15 +110,39 @@ class ContaController extends Controller
         //->withSelectedTipo($tipo);
 
         }else{
-            $movs=$conta->movimentos()->paginate(10);
+            $categorias=$conta->movimentos()->get('categoria_id');
+        //$categorias=Categoria::all()->toArray();
+        //dd($categorias);
+
+        if(request()->has('tipo') && request('tipo') != ''){
+            $movimentos=Movimento::query()->where('conta_id',$conta->id)->where('movimentos.tipo','=',request('tipo'))->orderBy('data','desc')->orderBy('id','desc');
+            //$movimentos= $conta->movimentos()->where('movimentos.tipo','=',request('tipo'));
+            //dd($movimentos);
+        }
+        elseif(request()->has('categoria_id') && request('categoria_id') != ''){
+            $movimentos=Movimento::query()->where('conta_id',$conta->id)->where('movimentos.categoria_id','=',request('categoria_id'))->orderBy('data','desc')->orderBy('id','desc');
+            //$movimentos= $conta->movimentos()->where('movimentos.categoria_id','=',request('categoria_id'));
+            //$movimentos=$conta->movimentos();
+        }else{
+            //$movimentos=$conta->movimentos();
+            $movimentos=Movimento::query()->where('conta_id',$conta->id)->orderBy('data','desc')->orderBy('id','desc');
+        }
+
+        
+
+
+        $movimentos = $movimentos->paginate(10);
+            //$movs=$conta->movimentos()->paginate(10);
         
             return view('contas.detalhe')
                 ->withConta($conta)
-                ->withMovimentos($movs);
+                ->withCategorias($categorias)
+                ->withMovimentos($movimentos);
         } 
     }
 
     public function edit(Conta $conta){
+       
         
         return view('contas.edit')->withConta($conta);
     }
