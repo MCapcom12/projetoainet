@@ -145,12 +145,10 @@ class ContaController extends Controller
     }
 
     public function edit(Conta $conta){
-        $this->authorize('view', $conta);
         return view('contas.edit')->withConta($conta);
     }
 
     public function update(ContaPost $request, Conta $conta){
-        $this->authorize('view', $conta);
         $validated_data =$request -> validated();
         $conta->fill($validated_data);
         $conta->save();
