@@ -21,16 +21,18 @@ use Illuminate\Support\Facades\Route;
 // dashboard
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Auth::routes(['verify' => true]);
+
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware'=>'auth'],function(){
+    
 Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
 //conta
 Route::get('contas','ContaController@admin')->name('contas')->middleware('auth');
 
@@ -94,3 +96,5 @@ Route::post('Perfil/Delete', 'ProfilesController@deleteUser')->name('deleteUser'
 
 Route::get('Estatisticas','EstatisticaController@index')->name('estatistica')->middleware('auth');
 //Route::get('Estatisticas','EstatisticaController@totalSaldo')->name('totalSaldo');
+});
+

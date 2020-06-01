@@ -2,7 +2,7 @@
 @section('title','Nova Conta')
 
 @section('content')
-    <form method="post" action="{{route('contas.store')}}"  class="form-group">
+    <form method="POST" action="{{route('contas.store')}}"  class="form-group">
         @csrf
         @include('contas.partials.create-edit')
         <div class="form-group text-right">

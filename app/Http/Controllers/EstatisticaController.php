@@ -88,7 +88,6 @@ class EstatisticaController extends Controller
                 $despesas=Movimento::where([['conta_id',$conta->id],['tipo','D']])->sum('valor');
                 
                 $total= $receitas-$despesas;
-                $total= number_format($total,2,'.','');
               
 
               // dd($movs->values());
@@ -101,8 +100,36 @@ class EstatisticaController extends Controller
             }
 
             //grafico cat por mes
+/*
+             $graphCat= new EstatisticaChart;
 
+          
            
+            
+             foreach($contas as $conta){
+                $RecCategorias= Movimento::select('movimentos.categoria_id',DB::raw('movimentos.categoria_id', "receitas nao classificadas"),DB::raw("sum(movimentos.valor)"))
+                ->leftjoin('categorias', 'categorias.id', '=','movimentos.categoria_id')
+                    ->where('movimentos.tipo','R')
+                    ->groupBy('movimentos.categoria_id')
+                    ->get();
+                 $DesCategoria  = Movimento::select('movimentos.categoria_id',DB::raw('movimentos.categoria_id', "despesas nao classificadas"),DB::raw("sum(movimentos.valor)"))
+                ->leftjoin('categorias', 'categorias.id', '=','movimentos.categoria_id')
+                ->where('movimentos.tipo','D')
+                ->groupBy('movimentos.categoria_id')
+                ->get();  
+                
+
+                //dd($RecCategorias);
+                //dd($DesCategoria);
+
+                $valor=$RecCategorias->sum('movimentos.valor');
+                
+                
+                    
+
+              $graphCat->dataset($conta->nome,'bar',[$valor]);      
+            } 
+    */
             
 
            
@@ -118,7 +145,16 @@ class EstatisticaController extends Controller
 
 
         
-        return view('estatisticas.index',compact('totalSaldo','totalValoresTempo'));
+        return view('estatisticas.index',compact('totalSaldo','totalValoresTempo','graphCat'));
     }
 
+
+    
+
+  
+
+
+    
+    
+   
 }

@@ -2,23 +2,7 @@
 @section('title','Estatisticas do Utilizador')
 @section('content')
 
-<div class="row mb-3" >
-    <div class="col-3">
-        <a href="#" class="btn btn-primary" role="button" aria-pressed="true">Resumo das Contas</a>
-    </div>
 
-    <div class="col-3">
-        <a href="#" class="btn btn-primary" role="button" aria-pressed="true">Resumo Receitas/Despesas</a>
-    </div>
-    
-    <div class="col-3">
-        <a href="#" class="btn btn-primary" role="button" aria-pressed="true">Receitas/Despesas por Categoria</a>
-    </div>
-
-    <div class="col-3">
-        <a href="#" class="btn btn-primary" role="button" aria-pressed="true">Medias</a>
-    </div>
-</div>
 
 <div class = "container">
             <div class="row">
@@ -44,6 +28,7 @@
              </div> 
         </div>
 
+       
 
 
 
