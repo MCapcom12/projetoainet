@@ -81,8 +81,9 @@ class ProfilesController extends Controller
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
             'nif' => ['nullable','int', 'digits_between:0,9'],
-            'telefone' => ['nullable','int'],
+            'telefone' => ['nullable','string', 'regex:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0-9]*$/i'],
             'foto' => ['max:10000', 'mimes:jpeg,png,jpg'],
+
         ]);
 
         $user = Auth::user();
@@ -128,6 +129,8 @@ class ProfilesController extends Controller
             //delete das contas
             $id->contas()->withTrashed()->forceDelete();
 
+            //delete de foto de user
+            Storage::delete('fotos' . '/' . $id->foto);
             //delete do user
             $id->delete();
             //User::destroy($id->id); 

@@ -13,6 +13,6 @@ class Categoria extends Model
     ];
 
     public function movimentos(){
-        return $this->hasMany("App\Movimento");
+        return $this->belongsToMany("App\Movimento","categoria_id");
     }
 }

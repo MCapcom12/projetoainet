@@ -30,6 +30,7 @@ class MovimentoPost extends FormRequest
             'tipo' => 'required|string|in:D,R',
             'categoria_id' => 'nullable',
             'descricao'=>'nullable|string'
+            
         ];
     }
 

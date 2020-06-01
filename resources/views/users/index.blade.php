@@ -2,6 +2,12 @@
 @section('title','UTILIZADORES')
 @section('content')
 
+@if (session('alert'))
+    <div class="alert alert-warning">
+        {{ session('alert') }}
+    </div>
+@endif
+
 <div> 
 <table class = "table">
     <thead>
@@ -30,6 +36,7 @@
             <td><img src="{{$id->foto ? $path = '/storage/fotos/' . $id->foto : asset('img/default_img.png') }}" style="width:50px;height:50px;float:left; border-radius: 50%; margin-right: 25px;"></td>         
             <td>{{$id->name}}</td>
             <td>{{$id->email}}</td>
+            <td><a href="{{route('authConta', $id)}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Autorizações</a></td>
         </tr>
     @endforeach
     </tbody>

@@ -32,15 +32,84 @@ class ContaController extends Controller
         ->withContas($contas);
     }
 
-    public function detalhe(Conta $conta){ 
+    public function detalhe(Conta $conta){
+        $users = $conta->utilizadores_autorizados;
+        $userAuth = 0;
+        foreach ($users as $utilizadores_autorizados) {
+            
+            if($utilizadores_autorizados->id == Auth::user()->id){
+                //Se fores um utilizador autorizado
+                $userAuth = 1;
+                if($utilizadores_autorizados->pivot->so_leitura == 1){
+                    $utilizadorLer = 1;
+                }else{
+                    $utilizadorLer = 0;
+                }
+                break;
 
-        $movs=$conta->movimentos()->paginate(10);
+
+            }
+        }
+        if($userAuth){
+            if($utilizadorLer){
+                $movs=$conta->movimentos()->paginate(10);
+        
+                return view('contas.partilhadasLer')
+                    ->withConta($conta)
+                    ->withMovimentos($movs);
+
+            }else{
+                $movs=$conta->movimentos()->paginate(10);
+        
+                return view('contas.partilhadasCompleto')
+                    ->withConta($conta)
+                    ->withMovimentos($movs);
+            }
+            
+        //$movs=$conta->movimentos()->paginate(10);
+        
+        //$tipo=$conta->movimentos()->get('tipo');
+
+        //$mov_tipo = $conta->movimentos()->where('tipo', 'D')->paginate(10);
+        $categorias=$conta->movimentos()->get('categoria_id');
+        //$categorias=Categoria::all()->toArray();
+        //dd($categorias);
+
+        if(request()->has('tipo') && request('tipo') != ''){
+            $movimentos= $conta->movimentos()->where('movimentos.tipo','=',request('tipo'));
+            //dd($movimentos);
+        }
+        elseif(request()->has('categoria_id') && request('categoria_id') != ''){
+            $movimentos= $conta->movimentos()->where('movimentos.categoria_id','=',request('categoria_id'));
+            //$movimentos=$conta->movimentos();
+        }else{
+            //$movimentos=$conta->movimentos();
+            $movimentos=Movimento::query()->where('conta_id',$conta->id)->orderBy('data','desc')->orderBy('id','desc');
+        }
+
         
 
-        return view('contas.detalhe')
-        ->withConta($conta)
-        ->withMovimentos($movs);
 
+        $movimentos = $movimentos->paginate(10);
+        //dd($mov_tipo);
+
+        //$movs =$conta->movimentos()->where('tipo', $mov_tipo)->paginate(10);
+        
+        //dd($movs);
+
+        return view('contas.detalhe')
+        ->withCategorias($categorias)
+        ->withConta($conta)
+        ->withMovimentos($movimentos);   
+        //->withSelectedTipo($tipo);
+
+        }else{
+            $movs=$conta->movimentos()->paginate(10);
+        
+            return view('contas.detalhe')
+                ->withConta($conta)
+                ->withMovimentos($movs);
+        } 
     }
 
     public function edit(Conta $conta){
@@ -138,5 +207,71 @@ class ContaController extends Controller
             ->with('alert-msg', 'Conta  foi restaurada com sucesso')
             ->with('alert-type','success');
     }
-   
+
+    public function auth(Conta $conta){
+        $users = $conta->utilizadores_autorizados;
+        foreach ($users as $utilizadores_autorizados) {
+            $utilizadores_autorizados->pivot->so_leitura;
+        }
+        return view('contas.auth')
+            ->withUsers($users)
+            ->withConta($conta);
+    }
+
+    public function addUser(Request $request, Conta $conta){
+        $search = $request->get('search');
+        $mail = $conta->utilizadores_autorizados()->where('email', '=', $search)->first();
+        if($mail){
+            return redirect()->back()
+                    ->with('alert-msg', 'Utilizador com email especificado já se encontra com autorizações!')
+                    ->with('alert-type','danger');
+        }
+
+        //Validar o email (Ver se ele está registado)
+        if(User::where('email', '=', $search)->exists()){
+            $user = User::where('email', '=', $search)->first();
+            //validar se o mail está verificado
+            if($user->email_verified_at == null){
+                return redirect()->back()
+                ->with('alert-msg', 'Utilizador com email especificado não se encontra verificado!')
+                ->with('alert-type','danger');
+            }else{
+                $id = $conta->utilizadores_autorizados();
+                $id->attach($user->id, ['so_leitura' => 1]);
+                return redirect()->back();
+            }
+            
+        }else{
+            return redirect()->back()
+                ->with('alert-msg', 'Utilizador com email especificado não foi encontrado, tente outra vez!')
+                ->with('alert-type','danger');
+        }
+    }
+
+    public function removeUser(Conta $conta, User $id){
+        $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
+        $user->detach($id->id);
+
+        return redirect()->back();
+    }
+
+    public function contasPartilhadas(Request $request){
+        $user= $request->user();
+
+        $contas = $user->autorizacoes_contas()->paginate(10);
+        
+       return view('contas.adminShared')
+            ->withContas($contas);
+    }
+
+    public function changeAuth(Conta $conta, User $id){ 
+        $user = $conta->utilizadores_autorizados()->where('user_id', $id->id);
+       //dd($users);
+                if($user->first()->pivot->so_leitura){
+                    $user->updateExistingPivot($id,['so_leitura'=> 0]);
+                }else{
+                    $user->updateExistingPivot($id,['so_leitura'=> 1]);
+                }
+        return redirect()->back();
+    }
 }

@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +43,13 @@ Route::post('contas/create','ContaController@store')->name('contas.store');
 Route::put('contas/{conta}','ContaController@update')->name('contas.update');
 Route::delete('contas/{conta}/detalhe','ContaController@destroy')->name('contas.destroy');
 
+
+Route::get('contas/{conta}/auth','ContaController@auth')->name('contas.auth');
+Route::get('contas/{conta}/addUser', 'ContaController@addUser')->name('contas.addUser');
+Route::get('contas/{conta}/removeUser/{id}', 'ContaController@removeUser')->name('contas.removeUser');
+Route::get('contasPartilhadas', 'ContaController@contasPartilhadas')->name('contasPartilhadas')->middleware('auth');
+Route::get('contas/{conta}/changeAuth/{id}', 'ContaController@changeAuth')->name('contas.changeAuth');
+
 //vai buscar as contas eliminadas de um determinado user
 Route::get('contas/lixeira','ContaController@lixeira')->name('contas.lixeira');
 Route::post('contas/{id}/restore','ContaController@restore')->name('contas.restore');
@@ -54,13 +61,17 @@ Route::get('users','UserController@index')->name('users')->middleware('auth');
 Route::get('/search', 'UserController@search');
 Route::get('users/{user}/changeType','UserController@adminChangeType')->name('changeType');
 Route::get('users/{user}/changeBlock','UserController@adminChangeBlock')->name('changeBlock');
+Route::get('users/{user}/auth','UserController@authConta')->name('authConta');
+Route::get('users/{user}/authUser/{conta}','UserController@authUser')->name('authUser');
+
 
 //Movimentos
 //Route::get('movimentos', 'MovimentoController@index')->name('movimentos')->middleware('auth');
 Route::get('contas/{conta}/movimentos/create', 'MovimentoController@create')->name('movimentos.create');
 Route::post('contas/{conta}/movimentos/create', 'MovimentoController@store')->name('movimentos.store');
 Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit')->name('movimentos.edit');
-Route::put('contas/{conta}/detalhe','MovimentoController@update')->name('movimentos.update');
+Route::put('movimentos/{movimento}','MovimentoController@update')->name('movimentos.update');
+Route::delete('movimentos/{movimento}','MovimentoController@destroy')->name('movimentos.destroy');
 //Route::get('categorias', 'MovimentoController@all_categorias')->name('categorias');
 //Route::get('contas/{conta}/movimentos/{movimento}');
 //Route::get('movimentos/{movimento}/edit');

@@ -62,6 +62,12 @@
               <span>Contas</span></a>
           </li>
 
+          <li class="nav-item {{Route::currentRouteName()=='contasPartilhadas'? 'active': ''}}">
+            <a class="nav-link" href="{{route('contasPartilhadas')}}">
+          <i class="fas fa-fw fa-table"></i>
+              <span>Contas Partilhadas</span></a>
+          </li>
+
           <li class="nav-item {{Route::currentRouteName()=='users'? 'active': ''}}">
             <a class="nav-link" href="{{route('users')}}">
           <i class="fas fa-fw fa-table"></i>
