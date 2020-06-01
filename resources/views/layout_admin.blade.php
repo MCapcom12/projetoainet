@@ -255,9 +255,13 @@
 
   <!--ChartScript-->
 
-  @if($estatistica ?? '')
-    {!! $estatistica->script() !!}
+  @if($totalSaldo ?? '')
+    {!! $totalSaldo->script() !!}
     @endif
+
+  @if($totalValoresTempo ?? '')
+    {!! $totalValoresTempo->script() !!}
+  @endif  
 
 
 </body>

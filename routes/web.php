@@ -40,7 +40,7 @@ Route::get('contas/create','ContaController@create')->name('contas.create');
 
 Route::post('contas/create','ContaController@store')->name('contas.store');
 
-Route::put('contas/{conta}/detalhe','ContaController@update')->name('contas.update');
+Route::put('contas/{conta}','ContaController@update')->name('contas.update');
 Route::delete('contas/{conta}/detalhe','ContaController@destroy')->name('contas.destroy');
 
 //vai buscar as contas eliminadas de um determinado user
@@ -78,3 +78,4 @@ Route::post('Perfil/Delete', 'ProfilesController@deleteUser')->name('deleteUser'
 //Estatisticas
 
 Route::get('Estatisticas','EstatisticaController@index')->name('estatistica')->middleware('auth');
+//Route::get('Estatisticas','EstatisticaController@totalSaldo')->name('totalSaldo');
